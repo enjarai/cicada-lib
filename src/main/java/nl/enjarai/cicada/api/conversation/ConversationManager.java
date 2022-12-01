@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import net.fabricmc.loader.api.FabricLoader;
+import nl.enjarai.cicada.Cicada;
 import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
+import nl.enjarai.cicada.api.util.RandomUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,14 +45,14 @@ public class ConversationManager {
     }
 
     public void run() {
-        conversations.values().stream()
+        RandomUtil.chooseWeighted(conversations.values().stream()
                 .filter(Conversation::shouldRun)
-                .sorted()
-                .findFirst()
+                .toList())
                 .ifPresent(Conversation::run);
     }
 
     protected void onDownloadError(IOException e) {
+        Cicada.LOGGER.debug("Failed to download conversation source", e);
     }
 
     private Optional<JsonObject> downloadJson(String url) {

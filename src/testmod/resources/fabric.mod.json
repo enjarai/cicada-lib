@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "nl.enjarai.cicadatest.CicadaTest"
+    ],
+    "cicada": [
+      "nl.enjarai.cicadatest.CicadaTest"
     ]
   },
   "mixins": [

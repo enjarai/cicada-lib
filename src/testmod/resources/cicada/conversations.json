@@ -9,10 +9,14 @@
       ]
     },
     "cicada:good_old_days": {
+      "priority": {
+        "priority": 100,
+        "override": 200
+      },
       "lines": [
         {
           "order": 10,
-          "text": "Yea those were the days, but that's harder on fabric. If only someone made a library to do help with that..."
+          "text": "Yea those were the days, but that's harder on fabric. If only someone made a library to help with that..."
         }
       ]
     }

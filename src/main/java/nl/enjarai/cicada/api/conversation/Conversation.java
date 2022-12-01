@@ -1,16 +1,19 @@
 package nl.enjarai.cicada.api.conversation;
 
 import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
+import nl.enjarai.cicada.api.util.RandomUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class Conversation implements Comparable<Conversation> {
+public class Conversation implements RandomUtil.Weighted {
     private final ConversationManager conversationManager;
 
-    private final List<LineCondition> conditions = new ArrayList<>();
-    private final List<Line> lines = new ArrayList<>();
+    private final List<LineCondition> conditions = Collections.synchronizedList(new ArrayList<>());
+    private final List<Line> lines = Collections.synchronizedList(new ArrayList<>());
     private int priority = 100;
     private int currentOverride = 0;
 
@@ -42,7 +45,7 @@ public class Conversation implements Comparable<Conversation> {
     }
 
     public void complete() {
-        lines.sort((line1, line2) -> Integer.compare(line2.getOrder(), line1.getOrder()));
+        lines.sort(Comparator.comparingInt(Line::getOrder));
     }
 
     public boolean shouldRun() {
@@ -54,7 +57,7 @@ public class Conversation implements Comparable<Conversation> {
     }
 
     @Override
-    public int compareTo(@NotNull Conversation o) {
-        return Integer.compare(getPriority(), o.getPriority());
+    public double getWeight() {
+        return getPriority();
     }
 }
