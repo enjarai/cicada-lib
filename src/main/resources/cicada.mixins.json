@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "nl.enjarai.cicada.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "LanguageMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

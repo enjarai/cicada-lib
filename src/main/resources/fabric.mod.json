@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "cicada",
+  "version": "${version}",
+
+  "name": "CICADA",
+  "description": "Confusing, Interesting and Considerably Agnostic Development Aid",
+  "authors": [
+    "enjarai"
+  ],
+  "contact": {
+    "homepage": "https://enjarai.nl/",
+    "sources": "https://github.com/enjarai/cicada-lib"
+  },
+
+  "license": "MIT",
+  "icon": "assets/cicada/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "nl.enjarai.cicada.Cicada"
+    ]
+  },
+  "mixins": [
+    "cicada.mixins.json"
+  ],
+
+  "depends": {
+  }
+}
