@@ -1,0 +1,20 @@
+{
+  "conversations": {
+    "cicada:greetings": {
+      "lines": [
+        {
+          "order": 10,
+          "text": "Yup, coming in loud and clear!"
+        }
+      ]
+    },
+    "cicada:good_old_days": {
+      "lines": [
+        {
+          "order": 10,
+          "text": "Yea those were the days, but that's harder on fabric. If only someone made a library to do help with that..."
+        }
+      ]
+    }
+  }
+}

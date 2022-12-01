@@ -53,4 +53,8 @@ public class SimpleLine implements Line {
     public String getText() {
         return text;
     }
+
+    public void run() {
+        sourceLogger.accept(text);
+    }
 }

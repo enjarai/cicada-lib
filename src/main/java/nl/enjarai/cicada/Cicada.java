@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
 
-public class Cicada implements ModInitializer, CicadaEntrypoint {
+public final class Cicada implements ModInitializer, CicadaEntrypoint {
 	public static final String MOD_ID = "cicada";
 	public static final Logger LOGGER = ProperLogger.getLogger(MOD_ID);
 
@@ -25,7 +25,7 @@ public class Cicada implements ModInitializer, CicadaEntrypoint {
 	@Override
 	public void registerConversations(ConversationManager conversationManager) {
 		conversationManager.registerSourceUrl(
-				"https://raw.githubusercontent.com/enjarai/cicada-lib/master/cicada/conversations.json",
+				"https://raw.githubusercontent.com/enjarai/cicada-lib/master/src/main/resources/cicada/conversations.json",
 				LOGGER::info
 		);
 	}

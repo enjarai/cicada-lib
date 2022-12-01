@@ -8,6 +8,5 @@ public interface CicadaEntrypoint {
      * <p>
      * May be called outside the main thread, so be careful.
      */
-    default void registerConversations(ConversationManager conversationManager) {
-    }
+    void registerConversations(ConversationManager conversationManager);
 }

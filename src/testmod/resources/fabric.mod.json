@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "cicada",
+  "id": "cicada-test",
   "version": "${version}",
 
-  "name": "CICADA",
-  "description": "Confusing, Interesting and Considerably Agnostic Development Aid",
+  "name": "CICADA Test Mod",
+  "description": "Compiled In-Comprehensive Application I Can't Be Bothered To Come Up With More Acronym",
   "authors": [
     "enjarai"
   ],
@@ -14,26 +14,26 @@
   },
 
   "license": "MIT",
-  "icon": "assets/cicada/icon.png",
+  "icon": "assets/cicada-test/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "nl.enjarai.cicada.Cicada"
+      "nl.enjarai.cicadatest.CicadaTest"
     ]
   },
   "mixins": [
-    "cicada.mixins.json"
   ],
 
   "depends": {
+    "cicada": "*"
   },
 
   "custom": {
     "modmenu": {
-      "badges": [
-        "library"
-      ]
+      "parent": {
+        "id": "cicada"
+      }
     }
   }
 }

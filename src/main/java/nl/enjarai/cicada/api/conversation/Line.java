@@ -6,4 +6,6 @@ public interface Line {
     boolean isConditionMet();
 
     String getText();
+
+    void run();
 }

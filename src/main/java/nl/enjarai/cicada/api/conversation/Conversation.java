@@ -50,6 +50,7 @@ public class Conversation implements Comparable<Conversation> {
     }
     
     public void run() {
+        lines.stream().filter(Line::isConditionMet).forEach(Line::run);
     }
 
     @Override
