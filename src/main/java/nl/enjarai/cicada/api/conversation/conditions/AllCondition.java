@@ -1,8 +1,8 @@
-package nl.enjarai.cicada.conversation.conditions;
+package nl.enjarai.cicada.api.conversation.conditions;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import nl.enjarai.cicada.conversation.Conversation;
+import nl.enjarai.cicada.api.conversation.Conversation;
 
 import java.util.List;
 

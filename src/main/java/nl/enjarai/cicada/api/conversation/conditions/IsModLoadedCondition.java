@@ -1,9 +1,9 @@
-package nl.enjarai.cicada.conversation.conditions;
+package nl.enjarai.cicada.api.conversation.conditions;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import nl.enjarai.cicada.conversation.Conversation;
+import nl.enjarai.cicada.api.conversation.Conversation;
 
 public record IsModLoadedCondition(String modId) implements LineCondition {
     public static final String TYPE = "cicada:is_mod_loaded";

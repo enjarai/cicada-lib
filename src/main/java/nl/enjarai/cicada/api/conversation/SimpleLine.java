@@ -1,16 +1,15 @@
-package nl.enjarai.cicada.conversation;
+package nl.enjarai.cicada.api.conversation;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import nl.enjarai.cicada.conversation.conditions.LineCondition;
-import nl.enjarai.cicada.conversation.conditions.TrueCondition;
+import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
+import nl.enjarai.cicada.api.conversation.conditions.TrueCondition;
 
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 public class SimpleLine implements Line {
     public static final Codec<SimpleLine> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.INT.fieldOf("priority").forGetter(SimpleLine::getPriority),
+            Codec.INT.fieldOf("order").forGetter(SimpleLine::getOrder),
             LineCondition.CODEC.optionalFieldOf("condition", new TrueCondition()).forGetter(SimpleLine::getCondition),
             Codec.STRING.fieldOf("text").forGetter(SimpleLine::getText)
     ).apply(instance, SimpleLine::new));
@@ -18,12 +17,12 @@ public class SimpleLine implements Line {
     private Conversation conversation;
     private Consumer<String> sourceLogger;
 
-    private final int priority;
+    private final int order;
     private final LineCondition condition;
     private final String text;
 
-    public SimpleLine(int priority, LineCondition condition, String text) {
-        this.priority = priority;
+    public SimpleLine(int order, LineCondition condition, String text) {
+        this.order = order;
         this.condition = condition;
         this.text = text;
     }
@@ -37,8 +36,8 @@ public class SimpleLine implements Line {
     }
 
     @Override
-    public int getPriority() {
-        return priority;
+    public int getOrder() {
+        return order;
     }
 
     @Override

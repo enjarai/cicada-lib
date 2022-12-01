@@ -1,0 +1,28 @@
+{
+  "conversations": {
+    "cicada:greetings": {
+      "priority": {
+        "priority": 100,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "Hello, anyone there?"
+        }
+      ]
+    },
+    "cicada:good_old_days": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "Don't you miss the times when mods would converse with each other in the game log?"
+        }
+      ]
+    }
+  }
+}

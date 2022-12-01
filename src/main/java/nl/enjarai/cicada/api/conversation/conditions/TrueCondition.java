@@ -1,7 +1,7 @@
-package nl.enjarai.cicada.conversation.conditions;
+package nl.enjarai.cicada.api.conversation.conditions;
 
 import com.mojang.serialization.Codec;
-import nl.enjarai.cicada.conversation.Conversation;
+import nl.enjarai.cicada.api.conversation.Conversation;
 
 public record TrueCondition() implements LineCondition {
     public static final String TYPE = "cicada:true";

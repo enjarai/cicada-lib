@@ -1,4 +1,4 @@
-package nl.enjarai.cicada.compat;
+package nl.enjarai.cicada.api.compat;
 
 import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;

@@ -1,7 +1,7 @@
-package nl.enjarai.cicada.conversation.conditions;
+package nl.enjarai.cicada.api.conversation.conditions;
 
 import com.mojang.serialization.Codec;
-import nl.enjarai.cicada.conversation.Conversation;
+import nl.enjarai.cicada.api.conversation.Conversation;
 
 import java.util.Map;
 import java.util.function.Predicate;
@@ -11,7 +11,8 @@ public interface LineCondition extends Predicate<Conversation> {
             TrueCondition.TYPE, TrueCondition.CODEC,
             AllCondition.TYPE, AllCondition.CODEC,
             AnyCondition.TYPE, AnyCondition.CODEC,
-            IsModLoadedCondition.TYPE, IsModLoadedCondition.CODEC
+            IsModLoadedCondition.TYPE, IsModLoadedCondition.CODEC,
+            PercentageChanceCondition.TYPE, PercentageChanceCondition.CODEC
     );
     Codec<LineCondition> CODEC = Codec.STRING.dispatch(LineCondition::getType, CODECS::get);
 

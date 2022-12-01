@@ -1,7 +1,7 @@
-package nl.enjarai.cicada.conversation;
+package nl.enjarai.cicada.api.conversation;
 
 public interface Line {
-    int getPriority();
+    int getOrder();
 
     boolean isConditionMet();
 

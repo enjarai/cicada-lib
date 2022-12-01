@@ -1,4 +1,4 @@
-package nl.enjarai.cicada.util;
+package nl.enjarai.cicada.api.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
