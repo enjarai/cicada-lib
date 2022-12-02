@@ -1,43 +1,51 @@
 package nl.enjarai.cicada.api.conversation;
 
-import com.google.gson.Gson;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import net.fabricmc.loader.api.FabricLoader;
 import nl.enjarai.cicada.Cicada;
 import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
+import nl.enjarai.cicada.api.util.JsonSource;
 import nl.enjarai.cicada.api.util.RandomUtil;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 public class ConversationManager {
-    private static final Gson GSON = new Gson();
+    private static final ExecutorService THREAD_POOL = Executors.newFixedThreadPool(10, new ThreadFactoryBuilder()
+            .setNameFormat("Cicada thread %d")
+            .setThreadFactory(Executors.defaultThreadFactory())
+            .build());
 
-    private final Map<String, Consumer<String>> sourceUrls = new HashMap<>();
+    private final Map<JsonSource, Consumer<String>> jsonSources = new HashMap<>();
     private final Map<String, Conversation> conversations = new ConcurrentHashMap<>();
+
+    public static ExecutorService getThreadPool() {
+        return THREAD_POOL;
+    }
 
     public void init() {
         FabricLoader.getInstance().getEntrypoints("cicada", CicadaEntrypoint.class)
                 .forEach(entrypoint -> entrypoint.registerConversations(this));
 
-        CompletableFuture.allOf(sourceUrls.entrySet().stream()
-                .map(entry -> CompletableFuture.runAsync(() -> downloadJson(entry.getKey())
-                        .ifPresent(json -> decodeSideJson(json, line -> {
-                            if (line instanceof SimpleLine simpleLine) {
-                                simpleLine.setSourceLogger(entry.getValue());
-                            }
-                        }))
+        // Concurrently loads all the conversations, getting them from their sources and decoding the json.
+        CompletableFuture.allOf(jsonSources.entrySet().stream()
+                .map(entry -> CompletableFuture.runAsync(
+                        () -> entry.getKey().getSafely(this::onLoadError)
+                                .ifPresent(json -> decodeSideJson(json, line -> {
+                                    if (line instanceof SimpleLine simpleLine) {
+                                        simpleLine.setSourceLogger(entry.getValue());
+                                    }
+                                })),
+                        THREAD_POOL
                 )).toArray(CompletableFuture[]::new)
         ).join();
 
@@ -46,26 +54,34 @@ public class ConversationManager {
 
     public void run() {
         RandomUtil.chooseWeighted(conversations.values().stream()
-                .filter(Conversation::shouldRun)
-                .toList())
+                        .filter(Conversation::shouldRun)
+                        .toList())
                 .ifPresent(Conversation::run);
     }
 
-    protected void onDownloadError(IOException e) {
-        Cicada.LOGGER.debug("Failed to download conversation source", e);
+    public void registerSource(JsonSource source, Consumer<String> logger) {
+        jsonSources.put(source, logger);
     }
 
-    private Optional<JsonObject> downloadJson(String url) {
-        try {
-            URLConnection conn = new URL(url).openConnection();
-            conn.connect();
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                return Optional.of(GSON.fromJson(in, JsonObject.class));
-            }
-        } catch (IOException e) {
-            onDownloadError(e);
-            return Optional.empty();
+    public void registerUrlSource(String url, Consumer<String> logger) {
+        registerSource(JsonSource.fromUrl(url), logger);
+    }
+
+    public void registerFileSource(Path path, Consumer<String> logger) {
+        registerSource(JsonSource.fromFile(path), logger);
+    }
+
+    public Conversation getOrCreateConversation(String id) {
+        var conversation = conversations.get(id);
+        if (conversation == null) {
+            conversation = new Conversation(this);
+            conversations.put(id, conversation);
         }
+        return conversation;
+    }
+
+    protected void onLoadError(Exception e) {
+        Cicada.LOGGER.debug("Failed to load conversation source", e);
     }
 
     private void decodeSideJson(JsonObject json, Consumer<Line> lineModifier) {
@@ -89,26 +105,12 @@ public class ConversationManager {
             conversationJson.getAsJsonArray("lines").forEach(jsonElement -> {
                 var lineJson = jsonElement.getAsJsonObject();
                 var line = SimpleLine.CODEC.parse(JsonOps.INSTANCE, lineJson)
-                        .getOrThrow(false, string -> {
-                        });
+                        .getOrThrow(false, string -> {});
 
                 line.setConversation(conversation);
                 lineModifier.accept(line);
                 conversation.addLine(line);
             });
         });
-    }
-
-    public void registerSourceUrl(String url, Consumer<String> logger) {
-        sourceUrls.put(url, logger);
-    }
-
-    public Conversation getOrCreateConversation(String id) {
-        var conversation = conversations.get(id);
-        if (conversation == null) {
-            conversation = new Conversation(this);
-            conversations.put(id, conversation);
-        }
-        return conversation;
     }
 }
