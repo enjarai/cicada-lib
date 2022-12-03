@@ -1,4 +1,4 @@
-package nl.enjarai.cicada.api.util;
+package nl.enjarai.cicada.api.util.random;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -18,9 +18,5 @@ public class RandomUtil {
             }
         }
         return Optional.empty();
-    }
-
-    public interface Weighted {
-        double getWeight();
     }
 }

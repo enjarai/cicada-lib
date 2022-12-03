@@ -8,7 +8,7 @@ import nl.enjarai.cicada.Cicada;
 import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
 import nl.enjarai.cicada.api.util.JsonSource;
-import nl.enjarai.cicada.api.util.RandomUtil;
+import nl.enjarai.cicada.api.util.random.RandomUtil;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -111,6 +111,8 @@ public class ConversationManager {
                 lineModifier.accept(line);
                 conversation.addLine(line);
             });
+
+            conversation.addParticipantCount(1);
         });
     }
 }

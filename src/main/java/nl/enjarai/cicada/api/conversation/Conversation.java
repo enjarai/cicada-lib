@@ -1,21 +1,21 @@
 package nl.enjarai.cicada.api.conversation;
 
 import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
-import nl.enjarai.cicada.api.util.RandomUtil;
-import org.jetbrains.annotations.NotNull;
+import nl.enjarai.cicada.api.util.random.Weighted;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Conversation implements RandomUtil.Weighted {
+public class Conversation implements Weighted {
     private final ConversationManager conversationManager;
 
     private final List<LineCondition> conditions = Collections.synchronizedList(new ArrayList<>());
     private final List<Line> lines = Collections.synchronizedList(new ArrayList<>());
-    private int priority = 100;
+    private int priority = 0;
     private int currentOverride = 0;
+    private int participantCount = 0;
 
     public Conversation(ConversationManager conversationManager) {
         this.conversationManager = conversationManager;
@@ -40,6 +40,14 @@ public class Conversation implements RandomUtil.Weighted {
         return priority;
     }
 
+    public void addParticipantCount(int participantCount) {
+        this.participantCount += participantCount;
+    }
+
+    public int getParticipantCount() {
+        return participantCount;
+    }
+
     public ConversationManager getConversationManager() {
         return conversationManager;
     }
@@ -53,7 +61,9 @@ public class Conversation implements RandomUtil.Weighted {
     }
     
     public void run() {
-        lines.stream().filter(Line::isConditionMet).forEach(Line::run);
+        lines.stream()
+                .filter(Line::isConditionMet)
+                .forEach(Line::run);
     }
 
     @Override

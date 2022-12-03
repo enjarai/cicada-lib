@@ -23,6 +23,57 @@
           "text": "Don't you miss the times when mods would converse with each other in the game log?"
         }
       ]
+    },
+
+    "cicada:christmas": {
+      "priority": {
+        "priority": 100,
+        "override": 100
+      },
+      "condition": {
+        "type": "cicada:date",
+        "month": 12
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "Merry Christmas!"
+        }
+      ]
+    },
+    "cicada:new_year": {
+      "priority": {
+        "priority": 1000000,
+        "override": 100
+      },
+      "condition": {
+        "type": "cicada:date",
+        "month": 1,
+        "day": 1
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "Happy New Year!"
+        }
+      ]
+    },
+
+    "cicada:bclib": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "condition": {
+        "type": "cicada:mod_loaded",
+        "mod": "bclib"
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "Hi there BCLib, try not to cause any trouble will ya?"
+        }
+      ]
     }
   }
 }
