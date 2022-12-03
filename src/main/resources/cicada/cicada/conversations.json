@@ -66,12 +66,12 @@
       },
       "condition": {
         "type": "cicada:mod_loaded",
-        "mod": "bclib"
+        "mod_id": "bclib"
       },
       "lines": [
         {
           "order": 0,
-          "text": "Hi there BCLib, try not to cause any trouble will ya?"
+          "text": "Oh hi there BCLib, try not to cause any trouble will ya?"
         }
       ]
     }

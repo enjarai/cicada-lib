@@ -40,11 +40,17 @@ public class ConversationManager {
         CompletableFuture.allOf(jsonSources.entrySet().stream()
                 .map(entry -> CompletableFuture.runAsync(
                         () -> entry.getKey().getSafely(this::onLoadError)
-                                .ifPresent(json -> decodeSideJson(json, line -> {
-                                    if (line instanceof SimpleLine simpleLine) {
-                                        simpleLine.setSourceLogger(entry.getValue());
+                                .ifPresent(json -> {
+                                    try {
+                                        decodeSideJson(json, line -> {
+                                            if (line instanceof SimpleLine simpleLine) {
+                                                simpleLine.setSourceLogger(entry.getValue());
+                                            }
+                                        });
+                                    } catch (Exception e) {
+                                        onLoadError(e);
                                     }
-                                })),
+                                }),
                         THREAD_POOL
                 )).toArray(CompletableFuture[]::new)
         ).join();
