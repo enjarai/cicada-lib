@@ -4,7 +4,6 @@
   "package": "nl.enjarai.cicada.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "LanguageMixin"
   ],
   "client": [
   ],
