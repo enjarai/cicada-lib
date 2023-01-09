@@ -25,9 +25,6 @@
       "nl.enjarai.cicada.Cicada"
     ]
   },
-  "mixins": [
-    "cicada.mixins.json"
-  ],
 
   "depends": {
     "java": ">=17"
