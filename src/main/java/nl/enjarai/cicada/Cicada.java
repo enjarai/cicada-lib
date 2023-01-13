@@ -21,7 +21,8 @@ public final class Cicada implements ModInitializer, CicadaEntrypoint {
 		CompletableFuture.runAsync(() -> {
 			CONVERSATION_MANAGER.init();
 			CONVERSATION_MANAGER.run();
-		}, ConversationManager.getThreadPool());
+		}, ConversationManager.getThreadPool())
+				.thenRun(() -> ConversationManager.getThreadPool().shutdownNow());
 	}
 
 	@Override
