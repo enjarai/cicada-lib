@@ -14,6 +14,7 @@ public interface LineCondition extends Predicate<Conversation> {
             AllCondition.TYPE, () -> AllCondition.CODEC,
             AnyCondition.TYPE, () -> AnyCondition.CODEC,
             ModLoadedCondition.TYPE, () -> ModLoadedCondition.CODEC,
+            ModParticipatesCondition.TYPE, () -> ModParticipatesCondition.CODEC,
             AmountOfModsLoadedCondition.TYPE, () -> AmountOfModsLoadedCondition.CODEC,
             PercentageChanceCondition.TYPE, () -> PercentageChanceCondition.CODEC,
             AmountOfModsParticipatingCondition.TYPE, () -> AmountOfModsParticipatingCondition.CODEC,

@@ -91,6 +91,13 @@ public class ConversationManager {
     }
 
     private void decodeSideJson(JsonObject json, Consumer<Line> lineModifier) {
+        String modId;
+        if (json.has("mod_id")) {
+            modId = json.get("mod_id").getAsString();
+        } else {
+            modId = null;
+        }
+
         json.getAsJsonObject("conversations").entrySet().forEach(entry -> {
             var conversation = getOrCreateConversation(entry.getKey());
             var conversationJson = entry.getValue().getAsJsonObject();
@@ -119,6 +126,7 @@ public class ConversationManager {
             });
 
             conversation.addParticipantCount(1);
+            conversation.addParticipant(modId);
         });
     }
 }

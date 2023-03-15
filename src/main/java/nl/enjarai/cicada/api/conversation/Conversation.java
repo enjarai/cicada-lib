@@ -2,6 +2,7 @@ package nl.enjarai.cicada.api.conversation;
 
 import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
 import nl.enjarai.cicada.api.util.random.Weighted;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,7 @@ public class Conversation implements Weighted {
 
     private final List<LineCondition> conditions = Collections.synchronizedList(new ArrayList<>());
     private final List<Line> lines = Collections.synchronizedList(new ArrayList<>());
+    private final List<String> participants = Collections.synchronizedList(new ArrayList<>());
     private int priority = 0;
     private int currentOverride = 0;
     private int participantCount = 0;
@@ -27,6 +29,16 @@ public class Conversation implements Weighted {
 
     public void addLine(Line line) {
         lines.add(line);
+    }
+
+    public void addParticipant(@Nullable String participant) {
+        if (participant != null) {
+            participants.add(participant);
+        }
+    }
+
+    public List<String> getParticipants() {
+        return participants;
     }
 
     public void addPriority(int priority, int override) {
