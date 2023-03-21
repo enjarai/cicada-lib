@@ -1,4 +1,6 @@
 {
+  "mod_id": "cicada-test",
+
   "conversations": {
     "cicada:greetings": {
       "lines": [
@@ -17,6 +19,15 @@
         {
           "order": 10,
           "text": "Yea those were the days, but that's harder on fabric. If only someone made a library to help with that..."
+        }
+      ]
+    },
+
+    "cicada:testmod": {
+      "lines": [
+        {
+          "order": 10,
+          "text": "This is a test mod!"
         }
       ]
     }

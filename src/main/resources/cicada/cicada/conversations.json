@@ -1,4 +1,6 @@
 {
+  "mod_id": "cicada",
+
   "conversations": {
     "cicada:greetings": {
       "priority": {
@@ -43,7 +45,7 @@
     },
     "cicada:new_year": {
       "priority": {
-        "priority": 1000000,
+        "priority": 1000,
         "override": 100
       },
       "condition": {
@@ -72,6 +74,22 @@
         {
           "order": 0,
           "text": "Oh hi there BCLib, try not to cause any trouble will ya?"
+        }
+      ]
+    },
+
+    "cicada:testmod": {
+      "priority": {
+        "priority": 1000
+      },
+      "condition": {
+        "type": "cicada:mod_participates",
+        "mod_id": "cicada-test"
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "Oh hi there TestMod, hows it going?"
         }
       ]
     }

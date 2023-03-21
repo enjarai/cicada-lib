@@ -7,11 +7,10 @@ public class IntRange {
     public static final IntRange ANY = new IntRange(Integer.MIN_VALUE, Integer.MAX_VALUE);
     public static final Codec<IntRange> CODEC = Codec.either(Codec.INT, Codec.STRING)
             .xmap(
-                    either -> either.map(
-                            IntRange::new,
-                            IntRange::new
-                    ),
-                    range -> range.getMin() == range.getMax() ? Either.left(range.getMin()) : Either.right(range.toString())
+                    either -> either.map(IntRange::new, IntRange::new),
+                    range -> range.getMin() == range.getMax() ?
+                            Either.left(range.getMin()) :
+                            Either.right(range.toString())
             );
 
     private final int min;
