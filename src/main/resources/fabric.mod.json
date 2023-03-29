@@ -21,10 +21,16 @@
     "main": [
       "nl.enjarai.cicada.Cicada"
     ],
+    "client": [
+      "nl.enjarai.cicada.Cicada"
+    ],
     "cicada": [
       "nl.enjarai.cicada.Cicada"
     ]
   },
+  "mixins": [
+    "cicada.mixins.json"
+  ],
 
   "depends": {
     "java": ">=17"

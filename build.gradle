@@ -42,6 +42,9 @@ repositories {
 	maven {
 		url "https://maven.enjarai.nl/releases"
 	}
+	maven {
+		url "https://maven.enjarai.nl/mirrors"
+	}
 }
 
 dependencies {
@@ -54,6 +57,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	include modImplementation("io.github.jacg311:langfiles-plus:${project.langfiles_plus_version}")
+
+	include api(annotationProcessor("com.github.LlamaLad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}"))
 
 	testmodImplementation sourceSets.main.output
 }

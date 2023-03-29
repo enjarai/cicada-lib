@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "nl.enjarai.cicada.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "client": [
+    "CapeFeatureRendererMixin",
+    "ElytraFeatureRendererMixin",
+    "PlayerListEntryMixin"
+  ]
+}
