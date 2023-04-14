@@ -10,7 +10,6 @@
   },
   "client": [
     "CapeFeatureRendererMixin",
-    "ElytraFeatureRendererMixin",
     "PlayerListEntryMixin"
   ]
 }

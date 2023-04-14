@@ -27,7 +27,7 @@ public abstract class PlayerListEntryMixin {
     @Inject(method = "getCapeTexture", at = @At("TAIL"), cancellable = true)
     private void cicada$getCapeTexture(CallbackInfoReturnable<Identifier> cir) {
         CapeHandler handler = CapeHandler.fromProfile(profile);
-        if (handler.hasCape()) {
+        if (handler.hasCape() || handler.hasElytra()) {
             cir.setReturnValue(handler.getCapeTexture());
         }
     }
