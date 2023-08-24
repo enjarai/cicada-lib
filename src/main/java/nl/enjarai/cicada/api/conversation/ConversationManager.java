@@ -23,6 +23,7 @@ public class ConversationManager {
     private static final ExecutorService THREAD_POOL = Executors.newFixedThreadPool(10, new ThreadFactoryBuilder()
             .setNameFormat("Cicada thread %d")
             .setThreadFactory(Executors.defaultThreadFactory())
+            .setDaemon(true)
             .build());
 
     private final Map<JsonSource, Consumer<String>> jsonSources = new HashMap<>();
@@ -37,23 +38,7 @@ public class ConversationManager {
                 .forEach(entrypoint -> entrypoint.registerConversations(this));
 
         // Concurrently loads all the conversations, getting them from their sources and decoding the json.
-        CompletableFuture.allOf(jsonSources.entrySet().stream()
-                .map(entry -> CompletableFuture.runAsync(
-                        () -> entry.getKey().getSafely(this::onLoadError)
-                                .ifPresent(json -> {
-                                    try {
-                                        decodeSideJson(json, line -> {
-                                            if (line instanceof SimpleLine simpleLine) {
-                                                simpleLine.setSourceLogger(entry.getValue());
-                                            }
-                                        });
-                                    } catch (Exception e) {
-                                        onLoadError(e);
-                                    }
-                                }),
-                        THREAD_POOL
-                )).toArray(CompletableFuture[]::new)
-        ).join();
+        getConversationsFuture(jsonSources).join();
 
         conversations.values().forEach(Conversation::complete);
     }
@@ -69,10 +54,12 @@ public class ConversationManager {
         jsonSources.put(source, logger);
     }
 
+    @Deprecated
     public void registerUrlSource(String url, Consumer<String> logger) {
         registerSource(JsonSource.fromUrl(url), logger);
     }
 
+    @Deprecated
     public void registerFileSource(Path path, Consumer<String> logger) {
         registerSource(JsonSource.fromFile(path), logger);
     }
@@ -88,6 +75,26 @@ public class ConversationManager {
 
     protected void onLoadError(Exception e) {
         Cicada.LOGGER.debug("Failed to load conversation source", e);
+    }
+
+    private CompletableFuture<Void> getConversationsFuture(Map<JsonSource, Consumer<String>> sources) {
+        return CompletableFuture.allOf(sources.entrySet().stream()
+                .map(entry -> CompletableFuture.runAsync(
+                        () -> entry.getKey().getSafely(this::onLoadError)
+                                .ifPresent(json -> {
+                                    try {
+                                        decodeSideJson(json, line -> {
+                                            if (line instanceof SimpleLine simpleLine) {
+                                                simpleLine.setSourceLogger(entry.getValue());
+                                            }
+                                        });
+                                    } catch (Exception e) {
+                                        onLoadError(e);
+                                    }
+                                }),
+                        THREAD_POOL
+                )).toArray(CompletableFuture[]::new)
+        );
     }
 
     private void decodeSideJson(JsonObject json, Consumer<Line> lineModifier) {
