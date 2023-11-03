@@ -25,8 +25,8 @@ import java.util.concurrent.Executors;
 // https://www.gnu.org/licenses/lgpl-3.0.en.html
 @Environment(EnvType.CLIENT)
 public final class CapeHandler {
-    private static final String META_URL = "https://enjarai.nl/cicada-lib/meta/capes/%s/meta.json";
-    private static final String CAPE_URL = "https://enjarai.nl/cicada-lib/meta/capes/%s/cape.png";
+    private static final String META_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/meta.json";
+    private static final String CAPE_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/cape.png";
 
     private static final ExecutorService capeExecutor = Executors.newFixedThreadPool(2);
     private static final HashMap<UUID, CapeHandler> instances = new HashMap<>();

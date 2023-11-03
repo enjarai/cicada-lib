@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    private static final Version MC_VERSION = FabricLoader.getInstance()
+            .getModContainer("minecraft").get().getMetadata().getVersion();
+
     @Override
     public void onLoad(String mixinPackage) {
 
@@ -24,9 +28,14 @@ public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         try {
-            //noinspection OptionalGetWithoutIsPresent
-            return FabricLoader.getInstance().getModContainer("minecraft").get()
-                    .getMetadata().getVersion().compareTo(Version.parse("1.20.1")) <= 0;
+            var splitClassName = mixinClassName.split("\\.");
+            var subPackage = splitClassName[splitClassName.length - 2];
+
+            return switch (subPackage) {
+                case "post_20_2" -> MC_VERSION.compareTo(Version.parse("1.20.1")) > 0;
+                case "pre_20_2" -> MC_VERSION.compareTo(Version.parse("1.20.1")) <= 0;
+                default -> true;
+            };
         } catch (RuntimeException | VersionParsingException e) {
             return false;
         }

@@ -10,7 +10,8 @@
   },
   "client": [
     "CapeFeatureRendererMixin",
-    "PlayerListEntryMixin"
+    "post_20_2.PlayerListEntryMixin",
+    "pre_20_2.PlayerListEntryMixin"
   ],
   "plugin": "nl.enjarai.cicada.util.MixinPlugin"
 }

@@ -1,4 +1,4 @@
-package nl.enjarai.cicada.mixin;
+package nl.enjarai.cicada.mixin.pre_20_2;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.PlayerListEntry;
