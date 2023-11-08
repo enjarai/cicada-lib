@@ -1,7 +1,9 @@
 package nl.enjarai.cicadatest;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import nl.enjarai.cicada.api.conversation.ConversationManager;
+import nl.enjarai.cicada.api.util.AbstractModConfig;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
 import nl.enjarai.cicada.api.util.JsonSource;
 import nl.enjarai.cicada.api.util.ProperLogger;
@@ -22,6 +24,16 @@ public class CicadaTest implements ModInitializer, CicadaEntrypoint {
 
     @Override
     public void onInitialize() {
+        var config = AbstractModConfig.loadConfigFile(
+                FabricLoader.getInstance().getConfigDir().resolve("cicada-test.json"), new ModConfig());
 
+        LOGGER.warn("testInt: " + config.testInt);
+        LOGGER.warn("ayy: " + config.ayy);
+
+        config.testInt += 1;
+
+        LOGGER.warn("testInt: " + config.testInt);
+
+        config.save();
     }
 }

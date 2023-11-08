@@ -63,7 +63,7 @@
 
     "cicada:bclib": {
       "priority": {
-        "priority": 10,
+        "priority": 100,
         "override": 100
       },
       "condition": {

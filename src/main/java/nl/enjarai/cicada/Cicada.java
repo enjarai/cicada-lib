@@ -16,6 +16,7 @@ import java.util.concurrent.CompletableFuture;
 public final class Cicada implements ModInitializer, ClientModInitializer, CicadaEntrypoint {
 	public static final String MOD_ID = "cicada";
 	public static final Logger LOGGER = ProperLogger.getLogger(MOD_ID);
+	public static final Logger QUOTE_OF_THE_DAY_LOGGER = ProperLogger.getLogger("Library Quote of the Day");
 
 	public static final ConversationManager CONVERSATION_MANAGER = new ConversationManager();
 
@@ -24,6 +25,7 @@ public final class Cicada implements ModInitializer, ClientModInitializer, Cicad
 		// Load and run the conversations in a separate thread to avoid increased load times.
 		CompletableFuture.runAsync(() -> {
 			CONVERSATION_MANAGER.init();
+//			for (int i = 0; i < 999; i++)
 			CONVERSATION_MANAGER.run();
 		}, ConversationManager.getThreadPool());
 	}
@@ -39,6 +41,12 @@ public final class Cicada implements ModInitializer, ClientModInitializer, Cicad
 				JsonSource.fromUrl("https://raw.githubusercontent.com/enjarai/cicada-lib/master/src/main/resources/cicada/cicada/conversations.json")
 						.or(JsonSource.fromResource("cicada/cicada/conversations.json")),
 				LOGGER::info
+		);
+
+		conversationManager.registerSource(
+				JsonSource.fromUrl("https://raw.githubusercontent.com/enjarai/cicada-lib/master/src/main/resources/cicada/cicada/quote_of_the_day/conversations.json")
+						.or(JsonSource.fromResource("cicada/cicada/quote_of_the_day/conversations.json")),
+				QUOTE_OF_THE_DAY_LOGGER::info
 		);
 	}
 

@@ -1,0 +1,148 @@
+{
+  "conversations": {
+    "cicada:quote/huge_tater": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'i showed you my huge tater pls respond'"
+        }
+      ]
+    },
+    "cicada:quote/no_food_for_africa": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'@enjarai why did you name the food chest \"stuff to keep away from africa\"'"
+        }
+      ]
+    },
+    "cicada:quote/nyaa": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'nyaa~'"
+        }
+      ]
+    },
+    "cicada:quote/the_mineblocks": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'what'"
+        },
+        {
+          "order": 1,
+          "text": "'that's not you'"
+        },
+        {
+          "order": 2,
+          "text": "'mineblock8 was the eight version of you and the first version of louis and was eaten by dicedpixels in the bite of 87'"
+        },
+        {
+          "order": 3,
+          "text": "'mineblock9 was the ninth version of you and the second version of louis and sadly escaped, before infiltrating this thread as louis'"
+        },
+        {
+          "order": 4,
+          "text": "'mineblock10 was the tenth version of you and was stabbed'"
+        },
+        {
+          "order": 5,
+          "text": "'mineblock11 was the eleventh version of you and the only one deemed sane enough to be released in the wild'"
+        }
+      ]
+    },
+    "cicada:quote/object_input_stream": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'how can it be safe when there is no objectinputstream?'"
+        }
+      ]
+    },
+    "cicada:quote/based_benonardo": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'codec good'"
+        }
+      ]
+    },
+    "cicada:quote/ban_yourself": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'ban yourself'"
+        },
+        {
+          "order": 1,
+          "text": "'uwu'"
+        }
+      ]
+    },
+    "cicada:quote/modding_elite": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'maybe the real modding elite were the friends we made along the way'"
+        }
+      ]
+    },
+    "cicada:quote/catroversies": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'Rip ballin catroversies'"
+        }
+      ]
+    },
+    "cicada:quote/whyever_would_that_be": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'id like to browse without fear of being shunned by friends and family'"
+        }
+      ]
+    }
+  }
+}
