@@ -18,6 +18,9 @@ sourceSets {
 }
 
 loom {
+//	runConfigs.client.ideConfigGenerated = true
+//	runConfigs.server.ideConfigGenerated = true
+
 	runs {
 		testmodClient {
 			client()
@@ -110,6 +113,8 @@ publishing {
 }
 
 if (stonecutter.current().isActiveVersion()) {
+	loom.runConfigs.testmodClient.ideConfigGenerated = true
+	loom.runConfigs.client.ideConfigGenerated = true
 
 	rootProject.tasks.register('buildActive') {
 		setGroup 'project'
