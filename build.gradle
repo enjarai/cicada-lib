@@ -6,9 +6,9 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
+archivesBaseName = property('mod.name')
+version = "${property('mod.version')}+${property('mod.jarname_target')}"
+group = property('mod.maven_group')
 
 sourceSets {
 	testmod {
@@ -49,23 +49,21 @@ repositories {
 
 dependencies {
 	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	minecraft "com.mojang:minecraft:${stonecutter.current().version()}"
+	mappings "net.fabricmc:yarn:${property('deps.yarn')}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
 
-	include api(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}"))
+	include api(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${property('deps.mixin_extras')}"))
 
 	testmodImplementation sourceSets.main.output
 }
 
 processResources {
-	inputs.property "version", project.version
-
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand 'mod_version': version, 'target_minecraft': project.property('mod.target')
 	}
 }
 
@@ -102,11 +100,20 @@ publishing {
 
 	publications {
 		mavenJava(MavenPublication) {
-			groupId = project.group
+			groupId = group
 			artifactId = archivesBaseName
-			version = project.version
+			version = version
 
 			from components.java
 		}
+	}
+}
+
+if (stonecutter.current().isActiveVersion()) {
+
+	rootProject.tasks.register('buildActive') {
+		setGroup 'project'
+
+		dependsOn tasks.getByName('build')
 	}
 }

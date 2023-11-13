@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "cicada",
-  "version": "${version}",
+  "version": "${mod_version}",
 
   "name": "CICADA",
   "description": "Confusing, Interesting and Considerably Agnostic Development Aid",
@@ -33,7 +33,8 @@
   ],
 
   "depends": {
-    "java": ">=17"
+    "java": ">=17",
+    "minecraft": "${target_minecraft}"
   },
 
   "custom": {
