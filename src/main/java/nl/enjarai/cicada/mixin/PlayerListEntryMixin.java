@@ -2,7 +2,7 @@ package nl.enjarai.cicada.mixin;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.PlayerListEntry;
-/*? >=1.20.2 {?*//*
+/*? >=1.20.2 {?*/
 import net.minecraft.client.util.SkinTextures;
 /*?}?*/
 import net.minecraft.util.Identifier;
@@ -23,7 +23,7 @@ public abstract class PlayerListEntryMixin {
     @Final
     private GameProfile profile;
 
-    /*? <=1.20.1 {?*/
+    /*? <=1.20.1 {?*//*
     @Shadow private boolean texturesLoaded;
 
     @Inject(method = "loadTextures", at = @At("HEAD"))
@@ -40,7 +40,7 @@ public abstract class PlayerListEntryMixin {
             cir.setReturnValue(handler.getCapeTexture());
         }
     }
-    /*?} else {?*//*
+    /*?} else {?*/
     @Inject(method = "texturesSupplier", at = @At("HEAD"))
     private static void loadTextures(GameProfile profile, CallbackInfoReturnable<Supplier<SkinTextures>> cir) {
         CapeHandler.onLoadTexture(profile);
