@@ -112,6 +112,22 @@ publishing {
 	}
 }
 
+// Create a task to collect the completed jars in the root project's build/libs folder.
+def collectJars = tasks.register("collectJars", Copy) {copy ->
+
+	def task = tasks.getByName("remapJar")
+
+	dependsOn(task)
+
+	copy.from task
+	copy.into rootProject.buildDir.path + "/libs"
+}
+
+// Set up assemble to depend on the collectJars task, so it gets run on build.
+assemble {
+	dependsOn(collectJars)
+}
+
 if (stonecutter.current().isActiveVersion()) {
 	loom.runConfigs.testmodClient.ideConfigGenerated = true
 	loom.runConfigs.client.ideConfigGenerated = true
