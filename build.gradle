@@ -59,8 +59,6 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
 
-	include api(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${property('deps.mixin_extras')}"))
-
 	testmodImplementation sourceSets.main.output
 }
 
