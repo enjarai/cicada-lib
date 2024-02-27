@@ -10,6 +10,8 @@ import java.nio.charset.StandardCharsets;
 public final class CapeMeta {
     private boolean cape;
     private boolean elytra;
+    private boolean silly_hairs = false;
+    private boolean disable_head_overlay = false;
 
     public static CapeMeta fromJson(InputStream inputStream) {
         var reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
@@ -22,5 +24,13 @@ public final class CapeMeta {
 
     public boolean elytra() {
         return elytra;
+    }
+
+    public boolean sillyHairs() {
+        return silly_hairs;
+    }
+
+    public boolean disableHeadOverlay() {
+        return disable_head_overlay;
     }
 }

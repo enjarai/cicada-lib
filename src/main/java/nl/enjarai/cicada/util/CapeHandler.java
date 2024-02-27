@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,6 +28,7 @@ import java.util.concurrent.Executors;
 public final class CapeHandler {
     private static final String META_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/meta.json";
     private static final String CAPE_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/cape.png";
+    private static final String DECORATIONS_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/decorations.png";
 
     private static final ExecutorService capeExecutor = Executors.newFixedThreadPool(2);
     private static final HashMap<UUID, CapeHandler> instances = new HashMap<>();
@@ -60,6 +62,8 @@ public final class CapeHandler {
     private final UUID uuid;
     private boolean hasCape = false;
     private boolean hasElytra = false;
+    private boolean hasDecorations = false;
+    private CapeMeta meta;
 
     public boolean hasCape() {
         return hasCape;
@@ -69,20 +73,37 @@ public final class CapeHandler {
         return hasElytra;
     }
 
+    public boolean hasSillyHairs() {
+        return hasDecorations && meta.sillyHairs();
+    }
+
+    public boolean disableHeadOverlay() {
+        return hasDecorations && meta.disableHeadOverlay();
+    }
+
     public Identifier getCapeTexture() {
         return Cicada.id(uuid.toString());
+    }
+
+    public Identifier getDecorationsTexture() {
+        return Cicada.id("decorations/" + uuid.toString());
     }
 
     private void loadCape() {
         try {
             var metaUrl = String.format(META_URL, uuid);
             var metaConnection = getConnection(metaUrl);
-            var meta = CapeMeta.fromJson(metaConnection.getInputStream());
+            meta = CapeMeta.fromJson(metaConnection.getInputStream());
 
             if (meta.cape() || meta.elytra()) {
                 var capeUrl = String.format(CAPE_URL, uuid);
                 var capeConnection = getConnection(capeUrl);
                 setCapeTexture(capeConnection.getInputStream(), meta);
+            }
+            if (meta.sillyHairs()) {
+                var decoUrl = String.format(DECORATIONS_URL, uuid);
+                var decoConnection = getConnection(decoUrl);
+                setDecorationsTexture(decoConnection.getInputStream());
             }
         } catch (IOException | JsonParseException ignored) {
         }
@@ -94,7 +115,7 @@ public final class CapeHandler {
             var cape = NativeImage.read(image);
             MinecraftClient.getInstance().execute(() -> {
                 MinecraftClient.getInstance().getTextureManager().registerTexture(
-                        getCapeTexture(), new NativeImageBackedTexture(parseCape(cape))
+                        getCapeTexture(), new NativeImageBackedTexture(parseImg(cape, 64, 32))
                 );
                 hasCape = meta.cape();
                 hasElytra = meta.elytra();
@@ -105,9 +126,23 @@ public final class CapeHandler {
         }
     }
 
-    private NativeImage parseCape(NativeImage img) {
-        var imageWidth = 64;
-        var imageHeight = 32;
+    @SuppressWarnings("UnusedReturnValue")
+    public boolean setDecorationsTexture(InputStream image) {
+        try {
+            var silliness = NativeImage.read(image);
+            MinecraftClient.getInstance().execute(() -> {
+                MinecraftClient.getInstance().getTextureManager().registerTexture(
+                        getDecorationsTexture(), new NativeImageBackedTexture(parseImg(silliness, 64, 64))
+                );
+                hasDecorations = true;
+            });
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    private NativeImage parseImg(NativeImage img, int imageWidth, int imageHeight) {
         var srcWidth = img.getWidth();
         var srcHeight= img.getHeight();
         while (imageWidth < srcWidth || imageHeight < srcHeight) {

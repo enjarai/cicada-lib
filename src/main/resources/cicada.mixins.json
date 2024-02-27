@@ -10,6 +10,9 @@
   },
   "client": [
     "CapeFeatureRendererMixin",
-    "PlayerListEntryMixin"
+    "PlayerEntityModelMixin",
+    "PlayerEntityRendererMixin",
+    "PlayerListEntryMixin",
+    "PlayerEntityMixin"
   ]
 }
