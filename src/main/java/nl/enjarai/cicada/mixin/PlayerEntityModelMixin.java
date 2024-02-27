@@ -52,24 +52,22 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
         root.addChild("silly_hairs_left",
                 ModelPartBuilder.create()
                         .uv(-8, -8) // 0 0 top
-                        .cuboid(4.0F, -6.0F, -1.0F, 0.0F, 8.0F, 8.0F, EnumSet.of(Direction.EAST)),
-                ModelTransform.NONE
+                        .cuboid(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F, EnumSet.of(Direction.EAST)),
+                ModelTransform.of(4.0F, -8.0F, -4.0F, 0, 0, -0.5F)
         );
         root.addChild("silly_hairs_right",
                 ModelPartBuilder.create()
                         .uv(0, 0) // 0 8 bottom
-                        .cuboid(-4.0F, -6.0F, -1.0F, 0.0F, 8.0F, 8.0F, EnumSet.of(Direction.WEST)),
-                ModelTransform.NONE
+                        .cuboid(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F, EnumSet.of(Direction.WEST)),
+                ModelTransform.of(-4.0F, -8.0F, -4.0F, 0, 0, 0.5F)
         );
     }
 
     @Override
-    public void cicada_lib$renderSillyHairs(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, boolean right) {
+    public void cicada_lib$renderSillyHairs(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, boolean right, float wobble) {
         var sillyHairs = right ? sillyHairsRight : sillyHairsLeft;
 
-        sillyHairs.copyTransform(this.head);
-        sillyHairs.pivotX = 0.0F;
-        sillyHairs.pivotY = 0.0F;
+        sillyHairs.roll = wobble;
 
         sillyHairs.render(matrices, vertices, light, overlay);
     }
