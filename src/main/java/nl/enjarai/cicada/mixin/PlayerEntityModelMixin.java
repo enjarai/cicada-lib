@@ -52,13 +52,13 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
         root.addChild("silly_hairs_left",
                 ModelPartBuilder.create()
                         .uv(-8, -8) // 0 0 top
-                        .cuboid(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F, EnumSet.of(Direction.EAST)),
+                        .cuboid(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F), // EnumSet.of(Direction.EAST)
                 ModelTransform.of(4.0F, -8.0F, -4.0F, 0, 0, -0.5F)
         );
         root.addChild("silly_hairs_right",
                 ModelPartBuilder.create()
                         .uv(0, 0) // 0 8 bottom
-                        .cuboid(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F, EnumSet.of(Direction.WEST)),
+                        .cuboid(0.0F, 0.0F, 0.0F, 0.0F, 8.0F, 8.0F), // EnumSet.of(Direction.WEST)
                 ModelTransform.of(-4.0F, -8.0F, -4.0F, 0, 0, 0.5F)
         );
     }
