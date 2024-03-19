@@ -142,7 +142,7 @@ publishMods {
 	file = remapJar.archiveFile
 	displayName = "${property('mod.version')} for ${property('mod.target_nice')}"
 	version = project.version
-//	changelog = getRootProject().file("CHANGELOG.md").text
+	changelog = ""
 	type = STABLE
 	modLoaders.add("fabric")
 
