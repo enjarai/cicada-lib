@@ -32,6 +32,7 @@ public final class CapeHandler {
 
     private static final ExecutorService capeExecutor = Executors.newFixedThreadPool(2);
     private static final HashMap<UUID, CapeHandler> instances = new HashMap<>();
+    private static boolean sillyHairsFailed = false;
 
     public static void shutdown() {
         capeExecutor.shutdownNow();
@@ -54,6 +55,10 @@ public final class CapeHandler {
         return connection;
     }
 
+    public static void sillyHairsFailed() {
+        sillyHairsFailed = true;
+    }
+
 
     public CapeHandler(GameProfile profile) {
         uuid = profile.getId();
@@ -74,7 +79,7 @@ public final class CapeHandler {
     }
 
     public boolean hasSillyHairs() {
-        return hasDecorations && meta.sillyHairs();
+        return !sillyHairsFailed && hasDecorations && meta.sillyHairs();
     }
 
     public boolean disableHeadOverlay() {

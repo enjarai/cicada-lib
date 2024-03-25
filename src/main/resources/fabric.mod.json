@@ -9,8 +9,9 @@
     "enjarai"
   ],
   "contact": {
-    "homepage": "https://enjarai.nl/",
-    "sources": "https://github.com/enjarai/cicada-lib"
+    "homepage": "https://enjarai.dev/",
+    "sources": "https://github.com/enjarai/cicada-lib",
+    "issues": "https://github.com/enjarai/cicada-lib/issues"
   },
 
   "license": "MIT",
