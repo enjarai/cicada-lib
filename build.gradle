@@ -44,16 +44,16 @@ repositories {
 	// for more information about repositories.
 
 	maven {
-		url "https://maven.enjarai.nl/releases"
+		url "https://maven.enjarai.dev/releases"
 	}
 	maven {
-		url "https://maven.enjarai.nl/mirrors"
+		url "https://maven.enjarai.dev/mirrors"
 	}
 }
 
 dependencies {
 	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${stonecutter.current().version()}"
+	minecraft "com.mojang:minecraft:${stonecutter.current.version}"
 	mappings "net.fabricmc:yarn:${property('deps.yarn')}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
 
@@ -92,7 +92,7 @@ publishing {
 	repositories {
 		maven {
 			name = "enjaraiMaven"
-			url = "https://maven.enjarai.nl/releases"
+			url = "https://maven.enjarai.dev/releases"
 			credentials(PasswordCredentials)
 			authentication {
 				basic(BasicAuthentication)
@@ -127,7 +127,7 @@ assemble {
 	dependsOn(collectJars)
 }
 
-if (stonecutter.current().isActiveVersion()) {
+if (stonecutter.current.isActive()) {
 	loom.runConfigs.testmodClient.ideConfigGenerated = true
 	loom.runConfigs.client.ideConfigGenerated = true
 

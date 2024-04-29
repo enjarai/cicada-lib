@@ -9,10 +9,11 @@
     "defaultRequire": 0
   },
   "client": [
-    "CapeFeatureRendererMixin",
-    "PlayerEntityModelMixin",
-    "PlayerEntityRendererMixin",
-    "PlayerListEntryMixin",
-    "PlayerEntityMixin"
+    "LivingEntityRendererMixin",
+    "cosmetic.CapeFeatureRendererMixin",
+    "cosmetic.PlayerEntityMixin",
+    "cosmetic.PlayerEntityModelMixin",
+    "cosmetic.PlayerEntityRendererMixin",
+    "cosmetic.PlayerListEntryMixin"
   ]
 }

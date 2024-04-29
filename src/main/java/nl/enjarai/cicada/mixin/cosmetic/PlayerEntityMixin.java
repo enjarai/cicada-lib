@@ -1,4 +1,4 @@
-package nl.enjarai.cicada.mixin;
+package nl.enjarai.cicada.mixin.cosmetic;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.render.entity.PlayerModelPart;

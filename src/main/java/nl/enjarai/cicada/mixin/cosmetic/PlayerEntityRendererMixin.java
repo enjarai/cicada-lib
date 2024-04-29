@@ -1,4 +1,4 @@
-package nl.enjarai.cicada.mixin;
+package nl.enjarai.cicada.mixin.cosmetic;
 
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;

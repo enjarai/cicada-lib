@@ -6,16 +6,20 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+
+        maven {
+            url = "https://maven.kikugie.dev/releases"
+        }
     }
 }
 
 plugins {
-    id 'io.shcm.shsupercm.fabric.stonecutter' version '1.5'
+    id 'dev.kikugie.stonecutter' version "0.3.2"
 }
 
 stonecutter {
     shared {
-        versions '1.20.2', '1.20.1'
+        versions '1.20.2', '1.20.1', '1.19.4'
         vcsVersion '1.20.2'
     }
 
