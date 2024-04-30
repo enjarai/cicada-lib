@@ -34,6 +34,13 @@ public record CursedRegistryEntry<T>(T value, RegistryKey<? extends Registry<T>>
         return false;
     }
 
+    /*? if >=1.20.5 {*/
+    @Override
+    public boolean matches(RegistryEntry<T> entry) {
+        return false;
+    }
+    /*?}*/
+
     @Override
     public boolean matches(Predicate<RegistryKey<T>> predicate) {
         return false;

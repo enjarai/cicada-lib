@@ -1,11 +1,12 @@
 package nl.enjarai.cicada.api.conversation.conditions;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import nl.enjarai.cicada.api.conversation.Conversation;
 
 public record TrueCondition() implements LineCondition {
     public static final String TYPE = "cicada:true";
-    public static final Codec<TrueCondition> CODEC = Codec.unit(TrueCondition::new);
+    public static final MapCodec<TrueCondition> CODEC = MapCodec.unit(TrueCondition::new);
 
     @Override
     public boolean test(Conversation conversation) {

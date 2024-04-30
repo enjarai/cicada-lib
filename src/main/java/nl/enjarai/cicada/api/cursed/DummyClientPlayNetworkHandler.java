@@ -2,6 +2,7 @@ package nl.enjarai.cicada.api.cursed;
 
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.entity.damage.DamageScaling;
@@ -20,6 +21,8 @@ import nl.enjarai.cicada.Cicada;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalLong;
 import java.util.stream.Stream;
@@ -93,7 +96,24 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
     };
 
     private DummyClientPlayNetworkHandler() {
-        /*? if >=1.20.2 {*/
+        /*? if >=1.20.5 {*/
+        super(
+                MinecraftClient.getInstance(),
+                new ClientConnection(NetworkSide.CLIENTBOUND),
+                new net.minecraft.client.network.ClientConnectionState(
+                        MinecraftClient.getInstance().getGameProfile(),
+                        MinecraftClient.getInstance().getTelemetryManager().createWorldSession(true, Duration.ZERO, null),
+                        cursedRegistryManager.toImmutable(),
+                        FeatureSet.empty(),
+                        "",
+                        new ServerInfo("", "", ServerInfo.ServerType.OTHER),
+                        null,
+                        Map.of(),
+                        new ChatHud.ChatState(List.of(), List.of(), List.of()),
+                        false
+                )
+        );
+        /*?} elif >=1.20.2 {*//*
         super(
                 MinecraftClient.getInstance(),
                 new ClientConnection(NetworkSide.CLIENTBOUND),
@@ -107,7 +127,7 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                         null
                 )
         );
-        /*?} elif =1.20.1 {*//*
+        *//*?} elif =1.20.1 {*//*
         super(
                 MinecraftClient.getInstance(),
                 null,

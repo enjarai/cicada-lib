@@ -64,10 +64,22 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
         return defaultValue;
     }
 
+    /*? if >=1.20.5 {*/
+    @Override
+    public Optional<net.minecraft.registry.entry.RegistryEntryInfo> getEntryInfo(RegistryKey<T> key) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<RegistryEntry.Reference<T>> getEntry(Identifier id) {
+        return Optional.empty();
+    }
+    /*?} else {*//*
     @Override
     public Lifecycle getEntryLifecycle(T entry) {
         return Lifecycle.experimental();
     }
+    *//*?}*/
 
     @Override
     public Lifecycle getLifecycle() {

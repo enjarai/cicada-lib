@@ -1,12 +1,13 @@
 package nl.enjarai.cicada.api.conversation.conditions;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import nl.enjarai.cicada.api.conversation.Conversation;
 
 public record ModParticipatesCondition(String modId) implements LineCondition {
     public static final String TYPE = "cicada:mod_participates";
-    public static final Codec<ModParticipatesCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<ModParticipatesCondition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.STRING.fieldOf("mod_id").forGetter(ModParticipatesCondition::modId)
     ).apply(instance, ModParticipatesCondition::new));
 

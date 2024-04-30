@@ -1,16 +1,18 @@
 package nl.enjarai.cicada.api.conversation.conditions;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import nl.enjarai.cicada.api.conversation.Conversation;
 import nl.enjarai.cicada.api.util.IntRange;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public record DateCondition(IntRange year, IntRange month, IntRange weekDay,
                             IntRange day, IntRange hour, IntRange minute) implements LineCondition {
     public static final String TYPE = "cicada:date";
-    public static final Codec<DateCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<DateCondition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             IntRange.CODEC.optionalFieldOf("year", IntRange.ANY).forGetter(DateCondition::year),
             IntRange.CODEC.optionalFieldOf("month", IntRange.ANY).forGetter(DateCondition::month),
             IntRange.CODEC.optionalFieldOf("week_day", IntRange.ANY).forGetter(DateCondition::weekDay),

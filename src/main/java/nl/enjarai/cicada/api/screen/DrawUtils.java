@@ -8,6 +8,7 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import org.joml.Matrix4f;
+import org.joml.Matrix4fStack;
 import org.joml.Quaternionf;
 
 public class DrawUtils {
@@ -30,9 +31,15 @@ public class DrawUtils {
         entity.headYaw = entity.getYaw();
         entity.prevHeadYaw = entity.getYaw();
 
+        /*? if >=1.20.5 {*/
+        Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
+        modelViewStack.pushMatrix();
+        modelViewStack.translate(0.0f, 0.0f, 1000.0f);
+        /*?} else {*//*
         MatrixStack modelViewStack = RenderSystem.getModelViewStack();
         modelViewStack.push();
         modelViewStack.translate(0.0, 0.0, 1000.0);
+        *//*?}*/
         RenderSystem.applyModelViewMatrix();
 
         matrices.push();
@@ -59,7 +66,11 @@ public class DrawUtils {
         matrices.pop();
         DiffuseLighting.enableGuiDepthLighting();
 
+        /*? if >=1.20.5 {*/
+        modelViewStack.popMatrix();
+        /*?} else {*//*
         modelViewStack.pop();
+        *//*?}*/
         RenderSystem.applyModelViewMatrix();
 
         entity.bodyYaw = oldBodyYaw;

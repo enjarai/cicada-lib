@@ -1,13 +1,13 @@
 package nl.enjarai.cicada.api.conversation.conditions;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import nl.enjarai.cicada.api.conversation.Conversation;
 import nl.enjarai.cicada.api.util.IntRange;
 
 public record AmountOfModsParticipatingCondition(IntRange count) implements LineCondition {
     public static final String TYPE = "cicada:amount_of_mods_participating";
-    public static final Codec<AmountOfModsParticipatingCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<AmountOfModsParticipatingCondition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             IntRange.CODEC.fieldOf("count").forGetter(AmountOfModsParticipatingCondition::count)
     ).apply(instance, AmountOfModsParticipatingCondition::new));
 
