@@ -1,6 +1,7 @@
 package nl.enjarai.cicada.api.cursed;
 
 import com.mojang.serialization.Lifecycle;
+import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -68,6 +69,8 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
         }
     };
 
+    private static final Registry<BannerPattern> cursedBannerRegistry = new SimpleDefaultedRegistry<>("dummy", RegistryKeys.BANNER_PATTERN, Lifecycle.stable(), true);
+
     private static final DynamicRegistryManager.Immutable cursedRegistryManager = new DynamicRegistryManager.Immutable() {
         private final CursedRegistry<DamageType> damageTypes = new CursedRegistry<>(RegistryKeys.DAMAGE_TYPE, Cicada.id("fake_damage"),
                 new DamageType("", DamageScaling.NEVER, 0));
@@ -84,6 +87,9 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                 return Optional.of(cursedBiomeRegistry);
             } else if (RegistryKeys.DIMENSION_TYPE.equals(key)) {
                 return Optional.of(CURSED_DIMENSION_TYPE_REGISTRY);
+            } else if (RegistryKeys.BANNER_PATTERN.equals(key)) {
+                // This fixes lithium compat post-1.20.5
+                return Optional.of(cursedBannerRegistry);
             }
 
             return Optional.empty();
