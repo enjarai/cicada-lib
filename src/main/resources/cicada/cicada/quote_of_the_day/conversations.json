@@ -52,11 +52,11 @@
         },
         {
           "order": 2,
-          "text": "'mineblock8 was the eight version of you and the first version of louis and was eaten by dicedpixels in the bite of 87'"
+          "text": "'mineblock8 was the eight version of you and the first version of louise and was eaten by dicedpixels in the bite of 87'"
         },
         {
           "order": 3,
-          "text": "'mineblock9 was the ninth version of you and the second version of louis and sadly escaped, before infiltrating this thread as louis'"
+          "text": "'mineblock9 was the ninth version of you and the second version of louise and sadly escaped, before infiltrating this thread as louise'"
         },
         {
           "order": 4,
@@ -141,6 +141,18 @@
         {
           "order": 0,
           "text": "'id like to browse without fear of being shunned by friends and family'"
+        }
+      ]
+    },
+    "cicada:quote/eggest": {
+      "priority": {
+        "priority": 10,
+        "override": 100
+      },
+      "lines": [
+        {
+          "order": 0,
+          "text": "'I AM THE EGGEST OF THEM ALL' - Louise (she/her)"
         }
       ]
     }
