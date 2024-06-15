@@ -35,5 +35,8 @@ public class CicadaTest implements ModInitializer, CicadaEntrypoint {
         LOGGER.warn("testInt: " + config.testInt);
 
         config.save();
+
+//        var funnyVec = new Vec3d(1, 2, 3);
+//        LOGGER.warn("Funny vector " + funnyVec.fromVector3d(funnyVec.toVector3d().mul(2)).getZ());
     }
 }

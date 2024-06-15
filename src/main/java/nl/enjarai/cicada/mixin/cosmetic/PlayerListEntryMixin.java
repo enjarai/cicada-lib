@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.PlayerListEntry;
 /*? if >=1.20.2 {*/
 import net.minecraft.client.util.SkinTextures;
-/*?} */
+/*?}*/
 import net.minecraft.util.Identifier;
 import nl.enjarai.cicada.util.CapeHandler;
 import org.spongepowered.asm.mixin.Final;
@@ -23,7 +23,7 @@ public abstract class PlayerListEntryMixin {
     @Final
     private GameProfile profile;
 
-    /*? if <=1.20.1 {*//*/*
+    /*? if <=1.20.1 {*//*
     @Shadow private boolean texturesLoaded;
 
     @Inject(method = "loadTextures", at = @At("HEAD"))
@@ -52,7 +52,14 @@ public abstract class PlayerListEntryMixin {
         if (handler.hasCape()) {
             SkinTextures oldTextures = cir.getReturnValue();
             Identifier capeTexture = handler.getCapeTexture();
-            Identifier elytraTexture = handler.hasElytra() ? capeTexture : new Identifier("textures/entity/elytra.png");
+
+            /*? if >=1.21 {*/
+            Identifier defaultElytraTexture = Identifier.ofVanilla("textures/entity/elytra.png");
+            /*?} else {*//*
+            Identifier defaultElytraTexture = new Identifier("textures/entity/elytra.png");
+            *//*?} */
+
+            Identifier elytraTexture = handler.hasElytra() ? capeTexture : defaultElytraTexture;
             SkinTextures newTextures = new SkinTextures(
                     oldTextures.texture(), oldTextures.textureUrl(),
                     capeTexture, elytraTexture,
@@ -60,5 +67,5 @@ public abstract class PlayerListEntryMixin {
             cir.setReturnValue(newTextures);
         }
     }
-    /*?} */
+    /*?}*/
 }

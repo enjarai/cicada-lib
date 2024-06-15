@@ -44,6 +44,11 @@
       "badges": [
         "library"
       ]
+    },
+    "loom:injected_interfaces": {
+      "net/minecraft/class_243": [
+        "nl/enjarai/cicada/util/duck/ConvertibleVec3d"
+      ]
     }
   }
 }

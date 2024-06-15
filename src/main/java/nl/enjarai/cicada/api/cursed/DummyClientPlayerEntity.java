@@ -5,7 +5,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
+/*? if >=1.21 {*/
+import net.minecraft.entity.player.PlayerModelPart;
+/*?} else {*//*
 import net.minecraft.client.render.entity.PlayerModelPart;
+*//*?}*/
 import net.minecraft.client.util.DefaultSkinHelper;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EquipmentSlot;
@@ -25,7 +29,7 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
     /*?} else {*//*
     private Identifier skinIdentifier = null;
     private String model = null;
-    *//*?} */
+    *//*?}*/
     private PlayerEntity player = null;
     private Text name = null;
     public Function<EquipmentSlot, ItemStack> equippedStackSupplier = slot -> ItemStack.EMPTY;
@@ -52,7 +56,7 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
                 }
             }
         }, true);
-        *//*?} */
+        *//*?}*/
     }
 
     public DummyClientPlayerEntity(Text name) {
@@ -83,7 +87,7 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
         this.skinIdentifier = skinIdentifier;
         this.model = model;
     }
-    *//*?} */
+    *//*?}*/
 
     @Override
     public boolean isPartVisible(PlayerModelPart modelPart) {
@@ -110,7 +114,7 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
     public String getModel() {
         return model == null ? DefaultSkinHelper.getModel(getUuid()) : model;
     }
-    *//*?} */
+    *//*?}*/
 
     @Nullable
     @Override

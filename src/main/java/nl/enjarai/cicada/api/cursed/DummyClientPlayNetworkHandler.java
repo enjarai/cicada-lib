@@ -102,7 +102,26 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
     };
 
     private DummyClientPlayNetworkHandler() {
-        /*? if >=1.20.5 {*/
+        /*? if >=1.21 {*/
+        super(
+                MinecraftClient.getInstance(),
+                new ClientConnection(NetworkSide.CLIENTBOUND),
+                new net.minecraft.client.network.ClientConnectionState(
+                        MinecraftClient.getInstance().getGameProfile(),
+                        MinecraftClient.getInstance().getTelemetryManager().createWorldSession(true, Duration.ZERO, null),
+                        cursedRegistryManager.toImmutable(),
+                        FeatureSet.empty(),
+                        "",
+                        new ServerInfo("", "", ServerInfo.ServerType.OTHER),
+                        null,
+                        Map.of(),
+                        new ChatHud.ChatState(List.of(), List.of(), List.of()),
+                        false,
+                        Map.of(),
+                        net.minecraft.server.ServerLinks.EMPTY
+                )
+        );
+        /*?} elif >=1.20.5 {*//*
         super(
                 MinecraftClient.getInstance(),
                 new ClientConnection(NetworkSide.CLIENTBOUND),
@@ -119,7 +138,7 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                         false
                 )
         );
-        /*?} elif >=1.20.2 {*//*
+        *//*?} elif >=1.20.2 {*//*
         super(
                 MinecraftClient.getInstance(),
                 new ClientConnection(NetworkSide.CLIENTBOUND),
@@ -151,7 +170,7 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                 MinecraftClient.getInstance().getSession().getProfile(),
                 MinecraftClient.getInstance().getTelemetryManager().createWorldSession(true, Duration.of(0, ChronoUnit.SECONDS))
         );
-        *//*?} */
+        *//*?}*/
     }
 
     @Override

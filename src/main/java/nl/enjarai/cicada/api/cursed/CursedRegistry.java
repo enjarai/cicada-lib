@@ -86,6 +86,13 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
         return Lifecycle.experimental();
     }
 
+    /*? if >=1.21 {*/
+    @Override
+    public Optional<RegistryEntry.Reference<T>> getDefaultEntry() {
+        return Optional.empty();
+    }
+    /*?}*/
+
     @Override
     public Set<Identifier> getIds() {
         return Set.of(defaultId);

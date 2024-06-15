@@ -4,13 +4,14 @@
   "package": "nl.enjarai.cicada.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "Vec3dMixin",
+    "Vec3iMixin"
   ],
   "injectors": {
     "defaultRequire": 0
   },
   "client": [
     "LivingEntityRendererMixin",
-    "cosmetic.CapeFeatureRendererMixin",
     "cosmetic.PlayerEntityMixin",
     "cosmetic.PlayerEntityModelMixin",
     "cosmetic.PlayerEntityRendererMixin",
