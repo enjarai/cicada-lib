@@ -121,8 +121,8 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                         net.minecraft.server.ServerLinks.EMPTY
                 )
         );
-        /*?} elif >=1.20.5 {*//*
-        super(
+        /*?} elif >=1.20.5 {*/
+        /*super(
                 MinecraftClient.getInstance(),
                 new ClientConnection(NetworkSide.CLIENTBOUND),
                 new net.minecraft.client.network.ClientConnectionState(

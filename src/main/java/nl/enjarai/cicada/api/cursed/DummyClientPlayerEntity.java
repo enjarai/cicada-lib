@@ -7,8 +7,8 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 /*? if >=1.21 {*/
 import net.minecraft.entity.player.PlayerModelPart;
-/*?} else {*//*
-import net.minecraft.client.render.entity.PlayerModelPart;
+/*?} else {*/
+/*import net.minecraft.client.render.entity.PlayerModelPart;
 *//*?}*/
 import net.minecraft.client.util.DefaultSkinHelper;
 import net.minecraft.client.world.ClientWorld;

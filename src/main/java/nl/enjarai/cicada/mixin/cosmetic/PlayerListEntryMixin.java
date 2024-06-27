@@ -55,9 +55,9 @@ public abstract class PlayerListEntryMixin {
 
             /*? if >=1.21 {*/
             Identifier defaultElytraTexture = Identifier.ofVanilla("textures/entity/elytra.png");
-            /*?} else {*//*
-            Identifier defaultElytraTexture = new Identifier("textures/entity/elytra.png");
-            *//*?} */
+            /*?} else {*/
+            /*Identifier defaultElytraTexture = new Identifier("textures/entity/elytra.png");
+            *//*?}*/
 
             Identifier elytraTexture = handler.hasElytra() ? capeTexture : defaultElytraTexture;
             SkinTextures newTextures = new SkinTextures(

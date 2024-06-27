@@ -3,8 +3,8 @@ package nl.enjarai.cicada.mixin.cosmetic;
 import com.mojang.authlib.GameProfile;
 /*? if >=1.21 {*/
 import net.minecraft.entity.player.PlayerModelPart;
-/*?} else {*//*
-import net.minecraft.client.render.entity.PlayerModelPart;
+/*?} else {*/
+/*import net.minecraft.client.render.entity.PlayerModelPart;
 *//*?}*/
 import net.minecraft.entity.player.PlayerEntity;
 import nl.enjarai.cicada.util.CapeHandler;
