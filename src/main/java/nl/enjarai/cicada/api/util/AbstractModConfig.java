@@ -2,10 +2,13 @@ package nl.enjarai.cicada.api.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+import nl.enjarai.cicada.Cicada;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public abstract class AbstractModConfig {
     protected static final Gson GSON = new GsonBuilder()
@@ -46,6 +49,13 @@ public abstract class AbstractModConfig {
                 config = (T) GSON.fromJson(fileReader, defaultInstance.getClass());
             } catch (IOException e) {
                 throw new RuntimeException("Problem occurred when trying to load config: " + file, e);
+            } catch (JsonParseException e) {
+                Cicada.LOGGER.error("Failed to parse config file, backing up and overwriting with default config: {}", file, e);
+                try {
+                    Files.copy(file, file.resolveSibling(file.getFileName() + ".bak"), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e1) {
+                    Cicada.LOGGER.error("Failed to back up faulty config file: ", e1);
+                }
             }
         }
         // gson.fromJson() can return null if file is empty
