@@ -1,6 +1,6 @@
 {
     "cape": true,
     "elytra": true,
-    "silly_hairs": true,
-    "disable_head_overlay": true
+    "silly_hairs": false,
+    "disable_head_overlay": false
 }
