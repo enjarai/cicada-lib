@@ -3,9 +3,7 @@ package nl.enjarai.cicada.api.cursed;
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.network.ServerInfo;
 import net.minecraft.entity.damage.DamageScaling;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.network.ClientConnection;
@@ -13,20 +11,36 @@ import net.minecraft.network.NetworkSide;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.DimensionTypes;
 import nl.enjarai.cicada.Cicada;
-
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Map;
+
+
 import java.util.Optional;
 import java.util.OptionalLong;
 import java.util.stream.Stream;
+
+/*? if >=1.20.5 {*/
+
+import net.minecraft.client.gui.hud.ChatHud;
+import java.util.List;
+import java.util.Map;
+
+/*?}*/
+
+/*? if <=1.20.1 {*/
+/*import java.time.temporal.ChronoUnit;
+
+*//*?} else {*/
+
+import net.minecraft.client.network.ClientConnectionState;
+import net.minecraft.client.network.ServerInfo;
+import net.minecraft.resource.featuretoggle.FeatureSet;
+
+/*?}*/
 
 public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
     public static final Registry<DimensionType> CURSED_DIMENSION_TYPE_REGISTRY = new SimpleRegistry<>(RegistryKeys.DIMENSION_TYPE, Lifecycle.stable());
@@ -106,7 +120,7 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
         super(
                 MinecraftClient.getInstance(),
                 new ClientConnection(NetworkSide.CLIENTBOUND),
-                new net.minecraft.client.network.ClientConnectionState(
+                new ClientConnectionState(
                         MinecraftClient.getInstance().getGameProfile(),
                         MinecraftClient.getInstance().getTelemetryManager().createWorldSession(true, Duration.ZERO, null),
                         cursedRegistryManager.toImmutable(),
@@ -125,7 +139,7 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
         /*super(
                 MinecraftClient.getInstance(),
                 new ClientConnection(NetworkSide.CLIENTBOUND),
-                new net.minecraft.client.network.ClientConnectionState(
+                new ClientConnectionState(
                         MinecraftClient.getInstance().getGameProfile(),
                         MinecraftClient.getInstance().getTelemetryManager().createWorldSession(true, Duration.ZERO, null),
                         cursedRegistryManager.toImmutable(),
@@ -138,11 +152,11 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                         false
                 )
         );
-        *//*?} elif >=1.20.2 {*//*
-        super(
+        *//*?} elif >=1.20.2 {*/
+        /*super(
                 MinecraftClient.getInstance(),
                 new ClientConnection(NetworkSide.CLIENTBOUND),
-                new net.minecraft.client.network.ClientConnectionState(
+                new ClientConnectionState(
                         MinecraftClient.getInstance().getGameProfile(),
                         MinecraftClient.getInstance().getTelemetryManager().createWorldSession(true, Duration.ZERO, null),
                         cursedRegistryManager.toImmutable(),
@@ -152,8 +166,8 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                         null
                 )
         );
-        *//*?} elif =1.20.1 {*//*
-        super(
+        *//*?} elif =1.20.1 {*/
+        /*super(
                 MinecraftClient.getInstance(),
                 null,
                 new ClientConnection(NetworkSide.CLIENTBOUND),
@@ -161,8 +175,8 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                 MinecraftClient.getInstance().getSession().getProfile(),
                 MinecraftClient.getInstance().getTelemetryManager().createWorldSession(true, Duration.of(0, ChronoUnit.SECONDS), null)
         );
-        *//*?} else {*//*
-        super(
+        *//*?} else {*/
+        /*super(
                 MinecraftClient.getInstance(),
                 null,
                 new ClientConnection(NetworkSide.CLIENTBOUND),

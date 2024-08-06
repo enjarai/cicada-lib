@@ -21,8 +21,8 @@ public class DrawContextWrapper {
     public MatrixStack matrices() {
         return context.getMatrices();
     }
-    /*?} else {*//*
-    private final MatrixStack stack;
+    /*?} else {*/
+    /*private final MatrixStack stack;
 
     public DrawContextWrapper(MatrixStack stack) {
         this.stack = stack;

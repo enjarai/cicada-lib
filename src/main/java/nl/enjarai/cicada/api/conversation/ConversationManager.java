@@ -113,8 +113,8 @@ public class ConversationManager {
                 conversation.addCondition(LineCondition.CODEC.parse(JsonOps.INSTANCE, conversationJson.get("condition"))
                         /*? if >=1.20.5 {*/
                         .getOrThrow());
-                        /*?} else {*//*
-                        .getOrThrow(false, string -> {}));
+                        /*?} else {*/
+                        /*.getOrThrow(false, string -> {}));
                         *//*?}*/
             }
             if (conversationJson.has("priority")) {
@@ -131,8 +131,8 @@ public class ConversationManager {
                 var line = SimpleLine.CODEC.parse(JsonOps.INSTANCE, lineJson)
                         /*? if >=1.20.5 {*/
                         .getOrThrow();
-                        /*?} else {*//*
-                        .getOrThrow(false, string -> {});
+                        /*?} else {*/
+                        /*.getOrThrow(false, string -> {});
                         *//*?}*/
 
                 line.setConversation(conversation);

@@ -23,8 +23,8 @@ public abstract class PlayerListEntryMixin {
     @Final
     private GameProfile profile;
 
-    /*? if <=1.20.1 {*//*
-    @Shadow private boolean texturesLoaded;
+    /*? if <=1.20.1 {*/
+    /*@Shadow private boolean texturesLoaded;
 
     @Inject(method = "loadTextures", at = @At("HEAD"))
     private void cicada$loadTextures(CallbackInfo ci) {

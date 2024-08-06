@@ -26,8 +26,8 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
     private static DummyClientPlayerEntity instance;
     /*? if >=1.20.2 {*/
     private net.minecraft.client.util.SkinTextures skinTextures = null;
-    /*?} else {*//*
-    private Identifier skinIdentifier = null;
+    /*?} else {*/
+    /*private Identifier skinIdentifier = null;
     private String model = null;
     *//*?}*/
     private PlayerEntity player = null;
@@ -46,8 +46,8 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
         MinecraftClient.getInstance().getSkinProvider().fetchSkinTextures(getGameProfile()).thenAccept((textures) -> {
             skinTextures = textures;
         });
-        /*?} else {*//*
-        MinecraftClient.getInstance().getSkinProvider().loadSkin(getGameProfile(), (type, identifier, texture) -> {
+        /*?} else {*/
+        /*MinecraftClient.getInstance().getSkinProvider().loadSkin(getGameProfile(), (type, identifier, texture) -> {
             if (type == MinecraftProfileTexture.Type.SKIN) {
                 skinIdentifier = identifier;
                 model = texture.getMetadata("model");
@@ -75,8 +75,8 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
         setUuid(uuid);
         this.skinTextures = skinTextures;
     }
-    /*?} else {*//*
-    public DummyClientPlayerEntity(@Nullable PlayerEntity player, UUID uuid, Identifier skinIdentifier, @Nullable String model) {
+    /*?} else {*/
+    /*public DummyClientPlayerEntity(@Nullable PlayerEntity player, UUID uuid, Identifier skinIdentifier, @Nullable String model) {
         this(player, uuid, skinIdentifier, model, DummyClientWorld.getInstance(), DummyClientPlayNetworkHandler.getInstance());
     }
 
@@ -99,8 +99,8 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
     public net.minecraft.client.util.SkinTextures getSkinTextures() {
         return skinTextures == null ? DefaultSkinHelper.getSkinTextures(this.getUuid()) : skinTextures;
     }
-    /*?} else {*//*
-    @Override
+    /*?} else {*/
+    /*@Override
     public boolean hasSkinTexture() {
         return true;
     }

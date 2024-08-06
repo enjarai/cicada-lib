@@ -74,8 +74,8 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
     public Optional<RegistryEntry.Reference<T>> getEntry(Identifier id) {
         return Optional.empty();
     }
-    /*?} else {*//*
-    @Override
+    /*?} else {*/
+    /*@Override
     public Lifecycle getEntryLifecycle(T entry) {
         return Lifecycle.experimental();
     }
