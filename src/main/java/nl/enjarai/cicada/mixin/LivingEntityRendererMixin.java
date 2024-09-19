@@ -16,7 +16,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity> {
             cancellable = true
     )
     private void removeLabel(T livingEntity, CallbackInfoReturnable<Boolean> cir) {
-        if (livingEntity instanceof DummyClientPlayerEntity) {
+        if (livingEntity.getWorld() instanceof DummyClientWorld) {
             cir.setReturnValue(false);
         }
     }
