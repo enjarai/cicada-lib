@@ -3,12 +3,17 @@ package nl.enjarai.cicada.api.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import nl.enjarai.cicada.Cicada;
+import nl.enjarai.cicada.api.util.config.CommandConfig;
+import nl.enjarai.cicada.api.util.config.CommandConfigInstance;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractModConfig {
     protected static final Gson GSON = new GsonBuilder()
@@ -64,9 +69,20 @@ public abstract class AbstractModConfig {
         }
 
         config.file = file;
+        commandInstances.computeIfAbsent()
 
         // Saves the file in order to write new fields if they were added
         config.save();
         return config;
+    }
+
+    private static <T extends AbstractModConfig> void createOrUpdateCommand(T instance) {
+        var annotation = instance.getClass().getAnnotation(CommandConfig.class);
+        if (annotation == null) {
+            return;
+        }
+        var name = annotation.value();
+
+        CommandConfigInstance.create();
     }
 }
