@@ -1,7 +1,8 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.8-SNAPSHOT'
 	id 'maven-publish'
 	id "me.modmuss50.mod-publish-plugin" version "0.4.4"
+	id "dev.kikugie.j52j" version "1.0"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -51,9 +52,11 @@ repositories {
 	}
 }
 
+def mcVersion = hasProperty('deps.mc') ? property('deps.mc') : stonecutter.current.version
+
 dependencies {
 	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${stonecutter.current.version}"
+	minecraft "com.mojang:minecraft:${mcVersion}"
 	mappings "net.fabricmc:yarn:${property('deps.yarn')}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
 

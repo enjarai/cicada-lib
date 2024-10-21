@@ -1,5 +1,5 @@
 plugins.apply "dev.kikugie.stonecutter"
-stonecutter.active "1.21" /* [SC] DO NOT EDIT */
+stonecutter.active "1.21.2" /* [SC] DO NOT EDIT */
 
 stonecutter.registerChiseled tasks.register("chiseledBuild", stonecutter.chiseled) {
     setGroup "project"
@@ -17,4 +17,10 @@ stonecutter.registerChiseled tasks.register("chiseledPublishAll", stonecutter.ch
     setGroup "project"
 
     ofTask "publishAll"
+}
+
+stonecutter.registerChiseled tasks.register("chiseledRunTestmodClient", stonecutter.chiseled) {
+    setGroup "project"
+
+    ofTask "runTestmodClient"
 }

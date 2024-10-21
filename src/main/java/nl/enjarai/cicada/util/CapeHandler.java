@@ -157,7 +157,11 @@ public final class CapeHandler {
         var imgNew = new NativeImage(imageWidth, imageHeight, true);
         for (int x = 0; x < srcWidth; x++) {
             for (int y = 0; y < srcHeight; y++) {
-                imgNew.setColor(x, y, img.getColor(x, y));
+                //? if >1.21.1 {
+                imgNew.setColorArgb(x, y, img.getColorArgb(x, y));
+                //?} else {
+                /*imgNew.setColor(x, y, img.getColor(x, y));
+                *///?}
             }
         }
         img.close();

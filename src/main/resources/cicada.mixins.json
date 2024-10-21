@@ -11,10 +11,7 @@
     "defaultRequire": 0
   },
   "client": [
-    "LivingEntityRendererMixin",
-    "cosmetic.PlayerEntityMixin",
-    "cosmetic.PlayerEntityModelMixin",
-    "cosmetic.PlayerEntityRendererMixin",
+    "EntityRenderDispatcherMixin",
     "cosmetic.PlayerListEntryMixin"
   ]
 }

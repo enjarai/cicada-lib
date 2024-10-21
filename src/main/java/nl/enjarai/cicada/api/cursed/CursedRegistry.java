@@ -8,6 +8,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.entry.RegistryEntryOwner;
+import net.minecraft.registry.tag.TagGroupLoader;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
@@ -139,11 +140,6 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
     }
 
     @Override
-    public Optional<RegistryEntry.Reference<T>> getEntry(RegistryKey<T> key) {
-        return Optional.of(RegistryEntry.Reference.standAlone(this, key));
-    }
-
-    @Override
     public RegistryEntry<T> getEntry(T value) {
         return RegistryEntry.of(value);
     }
@@ -151,6 +147,13 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
     @Override
     public Stream<RegistryEntry.Reference<T>> streamEntries() {
         return null;
+    }
+
+    //? if <=1.21.1 {
+    
+    /*@Override
+    public Optional<RegistryEntry.Reference<T>> getEntry(RegistryKey<T> key) {
+        return Optional.of(RegistryEntry.Reference.standAlone(this, key));
     }
 
     @Override
@@ -222,6 +225,35 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
             }
         };
     }
+
+    *///?} else {
+
+    @Override
+    public Stream<RegistryEntryList.Named<T>> getTags() {
+        return Stream.empty();
+    }
+
+    @Override
+    public Stream<RegistryEntryList.Named<T>> streamTags() {
+        return Stream.empty();
+    }
+
+    @Override
+    public PendingTagLoad<T> startTagReload(TagGroupLoader.RegistryTags<T> tags) {
+        return null;
+    }
+
+    @Override
+    public Optional<RegistryEntry.Reference<T>> getOptional(RegistryKey<T> key) {
+        return Optional.of(createEntry(defaultValue));
+    }
+
+    @Override
+    public Optional<RegistryEntryList.Named<T>> getOptional(TagKey<T> tag) {
+        return Optional.empty();
+    }
+
+    //?}
 
     @NotNull
     @Override

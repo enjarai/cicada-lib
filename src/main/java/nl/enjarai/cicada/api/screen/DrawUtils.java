@@ -40,7 +40,9 @@ public class DrawUtils {
         modelViewStack.push();
         modelViewStack.translate(0.0, 0.0, 1000.0);
         *//*?}*/
-        RenderSystem.applyModelViewMatrix();
+
+        //? if <=1.21.1
+        /*RenderSystem.applyModelViewMatrix();*/
 
         matrices.push();
         matrices.translate(x, y, -950.0);
@@ -58,7 +60,11 @@ public class DrawUtils {
         dispatcher.setRenderShadows(false);
 
         VertexConsumerProvider.Immediate vertexConsumers = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-        dispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, matrices, vertexConsumers, 0xF000F0);
+        //? if >1.21.1 {
+        dispatcher.render(entity, 0.0, 0.0, 0.0, 1.0f, matrices, vertexConsumers, 0xF000F0);
+        //?} else {
+        /*dispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, matrices, vertexConsumers, 0xF000F0);
+         *///?}
         vertexConsumers.draw();
 
         dispatcher.setRenderShadows(true);
@@ -70,8 +76,10 @@ public class DrawUtils {
         modelViewStack.popMatrix();
         /*?} else {*/
         /*modelViewStack.pop();
-        *//*?}*/
-        RenderSystem.applyModelViewMatrix();
+         *//*?}*/
+
+        //? if <=1.21.1
+        /*RenderSystem.applyModelViewMatrix();*/
 
         entity.bodyYaw = oldBodyYaw;
         entity.setYaw(oldYaw);
