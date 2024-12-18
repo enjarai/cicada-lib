@@ -12,6 +12,8 @@
   },
   "client": [
     "EntityRenderDispatcherMixin",
+    "EntityRendererMixin",
+    "EntityRenderStateMixin",
     "cosmetic.PlayerListEntryMixin"
   ]
 }

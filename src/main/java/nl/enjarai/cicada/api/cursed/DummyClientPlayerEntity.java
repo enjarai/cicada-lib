@@ -42,11 +42,15 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
     private DummyClientPlayerEntity() {
         super(MinecraftClient.getInstance(), DummyClientWorld.getInstance(), DummyClientPlayNetworkHandler.getInstance(), null, null, false, false);
         setUuid(UUID.randomUUID());
-        /*? if >=1.20.2 {*/
+        /*? if >=1.21.4 {*/
+        MinecraftClient.getInstance().getSkinProvider().fetchSkinTextures(getGameProfile()).thenAccept((textures) -> {
+            skinTextures = textures.orElse(DefaultSkinHelper.getSkinTextures(getGameProfile()));
+        });
+        /*?} else if >=1.20.2 {*//*
         MinecraftClient.getInstance().getSkinProvider().fetchSkinTextures(getGameProfile()).thenAccept((textures) -> {
             skinTextures = textures;
         });
-        /*?} else {*/
+        *//*?} else {*/
         /*MinecraftClient.getInstance().getSkinProvider().loadSkin(getGameProfile(), (type, identifier, texture) -> {
             if (type == MinecraftProfileTexture.Type.SKIN) {
                 skinIdentifier = identifier;
