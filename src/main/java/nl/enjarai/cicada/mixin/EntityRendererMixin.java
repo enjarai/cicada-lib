@@ -2,7 +2,7 @@ package nl.enjarai.cicada.mixin;
 
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.entity.Entity;
-/*? if >=1.21.4 {*/
+/*? if >=1.21.2 {*/
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import nl.enjarai.cicada.api.render.RenderStateUpdateEvent;
 /*?}*/
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin {
-    /*? if >=1.21.4 {*/
+    /*? if >=1.21.2 {*/
     @Inject(
             method = "updateRenderState",
             at = @At("HEAD")

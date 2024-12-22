@@ -1,4 +1,4 @@
-/*? if >=1.21.4 {*/
+/*? if >=1.21.2 {*/
 package nl.enjarai.cicada.api.render;
 
 import net.minecraft.client.render.entity.state.EntityRenderState;

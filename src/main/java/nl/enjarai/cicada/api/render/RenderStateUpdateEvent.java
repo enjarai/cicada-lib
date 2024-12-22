@@ -1,4 +1,4 @@
-/*? if >=1.21.4 {*/
+/*? if >=1.21.2 {*/
 package nl.enjarai.cicada.api.render;
 
 import net.fabricmc.fabric.api.event.Event;
