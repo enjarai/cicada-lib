@@ -14,6 +14,8 @@
     "EntityRenderDispatcherMixin",
     "EntityRendererMixin",
     "EntityRenderStateMixin",
-    "cosmetic.PlayerListEntryMixin"
+    "cosmetic.PlayerListEntryMixin",
+    "imgui.RenderSystemMixin",
+    "imgui.WindowMixin"
   ]
 }

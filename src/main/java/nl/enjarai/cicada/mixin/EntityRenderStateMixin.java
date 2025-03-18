@@ -14,8 +14,8 @@ import java.util.Map;
 
 /*? if >=1.21.2 {*/
 @Mixin(EntityRenderState.class)
-/*?} else {*//*
-// Dummy target for older versions
+/*?} else {*/
+/*// Dummy target for older versions
 @Mixin(MinecraftClient.class)
 *//*?}*/
 public class EntityRenderStateMixin implements KeyableRenderState {
@@ -27,8 +27,8 @@ public class EntityRenderStateMixin implements KeyableRenderState {
     public Map<Identifier, Object> cicada$getStateMap() {
         return stateMap;
     }
-    /*?} else {*//*
-    @Override
+    /*?} else {*/
+    /*@Override
     public Map<Identifier, Object> cicada$getStateMap() {
         return Map.of();
     }

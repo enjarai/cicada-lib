@@ -63,6 +63,14 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
 
+	include(api("io.github.spair:imgui-java-binding:${property('deps.imgui')}"))
+	include(api("io.github.spair:imgui-java-lwjgl3:${property('deps.imgui')}") {
+		exclude group: "org.lwjgl"
+	})
+	include(api("io.github.spair:imgui-java-natives-windows:${property('deps.imgui')}"))
+	include(api("io.github.spair:imgui-java-natives-linux:${property('deps.imgui')}"))
+	include(api("io.github.spair:imgui-java-natives-macos:${property('deps.imgui')}"))
+
 	testmodImplementation sourceSets.main.output
 }
 
