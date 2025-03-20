@@ -1,8 +1,10 @@
+import net.fabricmc.loom.task.RemapJarTask
 plugins {
 	id 'fabric-loom' version '1.8-SNAPSHOT'
 	id 'maven-publish'
 	id "me.modmuss50.mod-publish-plugin" version "0.4.4"
 	id "dev.kikugie.j52j" version "1.0"
+	id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -17,6 +19,10 @@ sourceSets {
 		compileClasspath += main.compileClasspath
 		runtimeClasspath += main.runtimeClasspath
 	}
+}
+
+configurations {
+	shade
 }
 
 loom {
@@ -63,13 +69,13 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
 
-	include(api("io.github.spair:imgui-java-binding:${property('deps.imgui')}"))
-	include(api("io.github.spair:imgui-java-lwjgl3:${property('deps.imgui')}") {
+	shade(api("io.github.spair:imgui-java-binding:${property('deps.imgui')}"))
+	shade(api("io.github.spair:imgui-java-lwjgl3:${property('deps.imgui')}") {
 		exclude group: "org.lwjgl"
 	})
-	include(api("io.github.spair:imgui-java-natives-windows:${property('deps.imgui')}"))
-	include(api("io.github.spair:imgui-java-natives-linux:${property('deps.imgui')}"))
-	include(api("io.github.spair:imgui-java-natives-macos:${property('deps.imgui')}"))
+	shade(api("io.github.spair:imgui-java-natives-windows:${property('deps.imgui')}"))
+	shade(api("io.github.spair:imgui-java-natives-linux:${property('deps.imgui')}"))
+	shade(api("io.github.spair:imgui-java-natives-macos:${property('deps.imgui')}"))
 
 	testmodImplementation sourceSets.main.output
 }
@@ -90,6 +96,33 @@ java {
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+}
+
+jar {
+	// Store in temporary folder instead of outputting directly
+	destinationDirectory = file("${buildDir}/tmp/thinJar")
+}
+
+shadowJar {
+	// Store in temporary folder instead of outputting directly
+	destinationDirectory = file("${buildDir}/tmp/allJar")
+	// Only shade dependencies not provided by Minecraft/FAPI/FLoader
+	configurations = [project.configurations.shade]
+	relocate 'imgui', 'nl.enjarai.cicada.imgui'
+	relocate 'io.imgui', 'nl.enjarai.cicada.io.imgui'
+
+	//Exclude META-INF entries of shaded deps
+	exclude('META-INF/**')
+	// include() upsets shadow, so use from() instead
+	from('LICENSE.md', 'NOTICE.txt')
+	from('licenses') {
+		into('licenses')
+	}
+}
+
+remapJar {
+	dependsOn shadowJar
+	input = shadowJar.archivePath
 }
 
 jar {

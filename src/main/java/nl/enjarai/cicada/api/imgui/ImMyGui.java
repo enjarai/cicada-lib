@@ -6,7 +6,6 @@ import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import nl.enjarai.cicada.Cicada;
 import org.jetbrains.annotations.ApiStatus;
-import org.lwjgl.glfw.GLFW;
 
 public class ImMyGui {
     private static boolean initialized = false;
