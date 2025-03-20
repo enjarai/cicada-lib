@@ -8,7 +8,7 @@ public class ImGuiTest implements ImGuiThing {
 
     @Override
     public void render() {
-        ImGui.begin("ImGui Test!");
+        ImGui.begin(" ");
 
         ImGui.text("This is a test");
 
@@ -22,8 +22,25 @@ public class ImGuiTest implements ImGuiThing {
 
         if (ImGui.checkbox("Box!", text)) {
             text = !text;
+//            if (text) {
+//                ImGui.openPopup("test");
+//            } else {
+//                ImGui.closeCurrentPopup();
+//            }
         }
 
+//        ImGui.beginPopup("test");
+
+        ImGui.text("Hai?");
+        ImGui.button("test");
+
+//        ImGui.endPopup();
+
+        ImGui.end();
+
+        ImGui.begin(" ");
+
+        ImGui.text("This is a test");
         ImGui.end();
     }
 }

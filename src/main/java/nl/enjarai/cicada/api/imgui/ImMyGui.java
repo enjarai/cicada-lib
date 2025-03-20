@@ -6,6 +6,7 @@ import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import nl.enjarai.cicada.Cicada;
 import org.jetbrains.annotations.ApiStatus;
+import org.lwjgl.glfw.GLFW;
 
 public class ImMyGui {
     private static boolean initialized = false;
@@ -29,10 +30,10 @@ public class ImMyGui {
             io.addConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
 
             imguiGlfw.init(window, true);
-            imguiGl3.init();
+            imguiGl3.init(null);
 
             initialized = true;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             Cicada.LOGGER.error("Failed to load ImGui. Are we missing platform binaries? Some dependent mods may not work as expected.", e);
             errored = true;
         }
