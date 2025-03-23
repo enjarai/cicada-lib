@@ -1,12 +1,11 @@
 package nl.enjarai.cicada.api.imgui;
 
+import imgui.ImFontAtlas;
+import imgui.ImFontConfig;
 import imgui.ImGui;
-import imgui.callback.ImStrConsumer;
-import imgui.callback.ImStrSupplier;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
-import net.minecraft.client.MinecraftClient;
 import nl.enjarai.cicada.Cicada;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -44,6 +43,19 @@ public class ImMyGui {
 //            });
 //            io.setWantCaptureKeyboard(true);
 
+            ImFontAtlas fontAtlas = io.getFonts();
+            ImFontConfig fontConfig = new ImFontConfig(); // Natively allocated object, should be explicitly destroyed
+
+            fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesCyrillic());
+
+            fontAtlas.addFontDefault();
+
+            fontConfig.setMergeMode(true); // When enabled, all fonts added with this config would be merged with the previously added font
+            fontConfig.setPixelSnapH(true);
+
+            fontConfig.destroy();
+
+
             imguiGlfw.init(window, true);
             imguiGl3.init(null);
 
@@ -79,6 +91,10 @@ public class ImMyGui {
 
         ImGui.render();
         imguiGl3.renderDrawData(ImGui.getDrawData());
+    }
+
+    public static boolean shouldCancelGameKeyboardInputs() {
+        return ImGui.isAnyItemActive() || ImGui.isAnyItemFocused();
     }
 
     public static boolean isInitialized() {

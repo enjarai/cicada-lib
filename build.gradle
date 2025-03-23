@@ -104,19 +104,26 @@ jar {
 }
 
 shadowJar {
-	// Store in temporary folder instead of outputting directly
-	destinationDirectory = file("${buildDir}/tmp/allJar")
-	// Only shade dependencies not provided by Minecraft/FAPI/FLoader
+//	// Store in temporary folder instead of outputting directly
+//	destinationDirectory = file("${buildDir}/tmp/allJar")
+//	// Only shade dependencies not provided by Minecraft/FAPI/FLoader
+//	configurations = [project.configurations.shade]
+//	relocate 'imgui', 'nl.enjarai.cicada.imgui'
+//	relocate 'io.imgui', 'nl.enjarai.cicada.io.imgui'
+//
+//	//Exclude META-INF entries of shaded deps
+//	exclude('META-INF/**')
+//	// include() upsets shadow, so use from() instead
+//	from('LICENSE.md', 'NOTICE.txt')
+//	from('licenses') {
+//		into('licenses')
+//	}
 	configurations = [project.configurations.shade]
-	relocate 'imgui', 'nl.enjarai.cicada.imgui'
-	relocate 'io.imgui', 'nl.enjarai.cicada.io.imgui'
-
-	//Exclude META-INF entries of shaded deps
-	exclude('META-INF/**')
-	// include() upsets shadow, so use from() instead
-	from('LICENSE.md', 'NOTICE.txt')
-	from('licenses') {
-		into('licenses')
+//	classifier 'shadow-dev'
+	dependencies {
+		exclude(dependency('org.lwjgl:lwjgl'))
+		exclude(dependency('org.lwjgl:lwjgl-glfw'))
+		exclude(dependency('org.lwjgl:lwjgl-opengl'))
 	}
 }
 
