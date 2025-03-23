@@ -14,6 +14,6 @@ public class ImGuiThings {
 
     @ApiStatus.Internal
     public static void renderAll() {
-        things.forEach(ImMyGui::render);
+        ImMyGui.render(() -> things.forEach(ImGuiThing::render));
     }
 }

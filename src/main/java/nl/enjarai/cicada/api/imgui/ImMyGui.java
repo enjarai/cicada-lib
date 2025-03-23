@@ -1,9 +1,12 @@
 package nl.enjarai.cicada.api.imgui;
 
 import imgui.ImGui;
+import imgui.callback.ImStrConsumer;
+import imgui.callback.ImStrSupplier;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
+import net.minecraft.client.MinecraftClient;
 import nl.enjarai.cicada.Cicada;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -27,6 +30,19 @@ public class ImMyGui {
             var io = ImGui.getIO();
             io.setIniFilename(null);
             io.addConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
+//            io.setGetClipboardTextFn(new ImStrSupplier() {
+//                @Override
+//                public String get() {
+//                    return MinecraftClient.getInstance().keyboard.getClipboard();
+//                }
+//            });
+//            io.setSetClipboardTextFn(new ImStrConsumer() {
+//                @Override
+//                public void accept(String s) {
+//                    MinecraftClient.getInstance().keyboard.setClipboard(s);
+//                }
+//            });
+//            io.setWantCaptureKeyboard(true);
 
             imguiGlfw.init(window, true);
             imguiGl3.init(null);
@@ -44,8 +60,8 @@ public class ImMyGui {
             return;
         }
 
-        imguiGl3.shutdown();
-        imguiGlfw.shutdown();
+        imguiGl3.dispose();
+        imguiGlfw.dispose();
 
         initialized = false;
     }
@@ -55,6 +71,7 @@ public class ImMyGui {
             return;
         }
 
+//        imguiGl3.newFrame();
         imguiGlfw.newFrame();
         ImGui.newFrame();
 

@@ -1,10 +1,12 @@
 package nl.enjarai.cicadatest;
 
 import imgui.ImGui;
+import imgui.type.ImString;
 import nl.enjarai.cicada.api.imgui.ImGuiThing;
 
 public class ImGuiTest implements ImGuiThing {
     boolean text;
+    ImString testString = new ImString();
 
     @Override
     public void render() {
@@ -41,6 +43,9 @@ public class ImGuiTest implements ImGuiThing {
         ImGui.begin(" ");
 
         ImGui.text("This is a test");
+        ImGui.text(testString.get());
+        ImGui.inputText("testtext", testString);
+
         ImGui.end();
     }
 }
