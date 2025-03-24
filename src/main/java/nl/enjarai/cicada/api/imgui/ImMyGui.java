@@ -2,12 +2,18 @@ package nl.enjarai.cicada.api.imgui;
 
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
+import imgui.ImFontGlyphRangesBuilder;
 import imgui.ImGui;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import nl.enjarai.cicada.Cicada;
 import org.jetbrains.annotations.ApiStatus;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class ImMyGui {
     private static boolean initialized = false;
@@ -43,18 +49,34 @@ public class ImMyGui {
 //            });
 //            io.setWantCaptureKeyboard(true);
 
+
             ImFontAtlas fontAtlas = io.getFonts();
             ImFontConfig fontConfig = new ImFontConfig(); // Natively allocated object, should be explicitly destroyed
+            ImFontGlyphRangesBuilder glyphRangesBuilder = new ImFontGlyphRangesBuilder();
 
-            fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesCyrillic());
+            glyphRangesBuilder.addRanges(fontAtlas.getGlyphRangesDefault());
+            glyphRangesBuilder.addChar('…');
 
-            fontAtlas.addFontDefault();
+            ImGuiEvents.SETUP_FONT_RANGES.invoker().onSetup(glyphRangesBuilder);
 
-            fontConfig.setMergeMode(true); // When enabled, all fonts added with this config would be merged with the previously added font
-            fontConfig.setPixelSnapH(true);
+//            fontConfig.setGlyphRanges();
+//            fontConfig.setEllipsisChar('…');
+//            fontConfig.setMergeMode(true); // When enabled, all fonts added with this config would be merged with the previously added font
+//            fontConfig.setPixelSnapH(true);
+
+            var glyphRanges = glyphRangesBuilder.buildRanges();
+
+//            fontAtlas.addFontDefault();
+            fontAtlas.addFontFromMemoryTTF(
+                    loadFromResources("/font/RobotoMono-VariableFont_wght.ttf"), 16,
+                    fontConfig, glyphRanges
+            );
+
+            ImGuiEvents.SETUP_FONTS.invoker().onSetup(fontAtlas, glyphRanges);
+
+            fontAtlas.build();
 
             fontConfig.destroy();
-
 
             imguiGlfw.init(window, true);
             imguiGl3.init(null);
@@ -63,6 +85,15 @@ public class ImMyGui {
         } catch (Throwable e) {
             Cicada.LOGGER.error("Failed to load ImGui. Are we missing platform binaries? Some dependent mods may not work as expected.", e);
             errored = true;
+        }
+    }
+
+    public static byte[] loadFromResources(String name) {
+        try {
+            //noinspection DataFlowIssue
+            return Files.readAllBytes(Paths.get(ImMyGui.class.getResource(name).toURI()));
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 

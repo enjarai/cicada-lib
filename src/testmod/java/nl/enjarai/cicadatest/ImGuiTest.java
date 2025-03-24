@@ -12,7 +12,7 @@ public class ImGuiTest implements ImGuiThing {
     public void render() {
         ImGui.begin(" ");
 
-        ImGui.text("This is a test");
+        ImGui.text("This is a test \uD83D\uDC4D …");
 
         if (ImGui.button("Click Me")) {
             text = !text;
