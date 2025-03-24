@@ -16,6 +16,6 @@
     "EntityRenderStateMixin",
     "cosmetic.PlayerListEntryMixin",
     "imgui.RenderSystemMixin",
-    "imgui.WindowMixin"
+    "imgui.MinecraftClientMixin"
   ]
 }

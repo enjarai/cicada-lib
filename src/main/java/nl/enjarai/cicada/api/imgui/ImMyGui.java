@@ -81,7 +81,7 @@ public class ImMyGui {
             fontConfig.destroy();
 
             imguiGlfw.init(window, true);
-            imguiGl3.init(null);
+            imguiGl3.init();
 
             initialized = true;
         } catch (Throwable e) {
@@ -105,8 +105,8 @@ public class ImMyGui {
             return;
         }
 
-        imguiGl3.dispose();
-        imguiGlfw.dispose();
+        imguiGl3.shutdown();
+        imguiGlfw.shutdown();
 
         initialized = false;
     }
@@ -117,7 +117,7 @@ public class ImMyGui {
         }
 
         try {
-//            imguiGl3.newFrame();
+            imguiGl3.newFrame();
             imguiGlfw.newFrame();
             ImGui.newFrame();
 
