@@ -66,6 +66,8 @@ public class ImMyGui {
 
             var glyphRanges = glyphRangesBuilder.buildRanges();
 
+            fontAtlas.setLocked(false);
+
 //            fontAtlas.addFontDefault();
             fontAtlas.addFontFromMemoryTTF(
                     loadFromResources("/font/RobotoMono-VariableFont_wght.ttf"), 16,
@@ -110,18 +112,23 @@ public class ImMyGui {
     }
 
     public static void render(ImGuiThing thing) {
-        if (!initialized) {
+        if (!initialized || errored || !ImGui.getIO().getFonts().isBuilt()) {
             return;
         }
 
-//        imguiGl3.newFrame();
-        imguiGlfw.newFrame();
-        ImGui.newFrame();
+        try {
+//            imguiGl3.newFrame();
+            imguiGlfw.newFrame();
+            ImGui.newFrame();
 
-        thing.render();
+            thing.render();
 
-        ImGui.render();
-        imguiGl3.renderDrawData(ImGui.getDrawData());
+            ImGui.render();
+            imguiGl3.renderDrawData(ImGui.getDrawData());
+        } catch (Throwable e) {
+            Cicada.LOGGER.error("Failed to render ImGui. Will stop trying for now. Some dependent mods may not work as expected.", e);
+            errored = true;
+        }
     }
 
     public static boolean shouldCancelGameKeyboardInputs() {
