@@ -51,6 +51,10 @@ repositories {
 	// for more information about repositories.
 
 	maven {
+		url "https://maven.wispforest.io/releases"
+	}
+
+	maven {
 		url "https://maven.enjarai.dev/releases"
 	}
 	maven {
@@ -69,13 +73,18 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
 
-	shade(api("io.github.spair:imgui-java-binding:${property('deps.imgui')}"))
-	shade(api("io.github.spair:imgui-java-lwjgl3:${property('deps.imgui')}") {
-		exclude group: "org.lwjgl"
-	})
-	shade(api("io.github.spair:imgui-java-natives-windows:${property('deps.imgui')}"))
-	shade(api("io.github.spair:imgui-java-natives-linux:${property('deps.imgui')}"))
-	shade(api("io.github.spair:imgui-java-natives-macos:${property('deps.imgui')}"))
+//	shade(api("io.github.spair:imgui-java-binding:${property('deps.imgui')}"))
+//	shade(api("io.github.spair:imgui-java-lwjgl3:${property('deps.imgui')}") {
+//		exclude group: "org.lwjgl"
+//	})
+////	shade(api("io.github.spair:imgui-java-natives-windows:${property('deps.imgui')}"))
+//	shade(api("io.github.spair:imgui-java-natives-linux:${property('deps.imgui')}"))
+////	shade(api("io.github.spair:imgui-java-natives-macos:${property('deps.imgui')}"))
+	shade(api(rootProject.files('deps/imgui-java-binding-1.86.11-10-g0dbf36c.jar')))
+	shade(api(rootProject.files('deps/imgui-java-lwjgl3-1.86.11-10-g0dbf36c.jar')))
+	shade(api(rootProject.files('deps/imgui-java-natives-linux-1.86.11-10-g0dbf36c.jar')))
+	shade(api(rootProject.files('deps/imgui-java-natives-macos-1.86.11-10-g0dbf36c.jar')))
+	shade(api(rootProject.files('deps/imgui-java-natives-windows-1.86.11-10-g0dbf36c.jar')))
 
 	testmodImplementation sourceSets.main.output
 }

@@ -1,9 +1,6 @@
 package nl.enjarai.cicada.api.imgui;
 
-import imgui.ImFontAtlas;
-import imgui.ImFontConfig;
-import imgui.ImFontGlyphRangesBuilder;
-import imgui.ImGui;
+import imgui.*;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
@@ -12,14 +9,19 @@ import org.jetbrains.annotations.ApiStatus;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.FileAttribute;
 
 public class ImMyGui {
     private static boolean initialized = false;
     private static boolean errored = false;
     private static ImGuiImplGl3 imguiGl3;
     private static ImGuiImplGlfw imguiGlfw;
+
+    private static ImFont font;
 
     @ApiStatus.Internal
     public static void init(long window) {
@@ -49,6 +51,8 @@ public class ImMyGui {
 //            });
 //            io.setWantCaptureKeyboard(true);
 
+            imguiGlfw.init(window, true);
+            imguiGl3.init();
 
             ImFontAtlas fontAtlas = io.getFonts();
             ImFontConfig fontConfig = new ImFontConfig(); // Natively allocated object, should be explicitly destroyed
@@ -59,34 +63,44 @@ public class ImMyGui {
 
             ImGuiEvents.SETUP_FONT_RANGES.invoker().onSetup(glyphRangesBuilder);
 
-//            fontConfig.setGlyphRanges();
-//            fontConfig.setEllipsisChar('…');
-//            fontConfig.setMergeMode(true); // When enabled, all fonts added with this config would be merged with the previously added font
-//            fontConfig.setPixelSnapH(true);
+            fontConfig.setOversampleH(2);
+            fontConfig.setOversampleV(2);
+
+            fontConfig.setName("Inter (Medium), 16px");
+            fontConfig.setGlyphOffset(0, 0);
 
             var glyphRanges = glyphRangesBuilder.buildRanges();
 
-            fontAtlas.setLocked(false);
-
-//            fontAtlas.addFontDefault();
-            fontAtlas.addFontFromMemoryTTF(
-                    loadFromResources("/font/RobotoMono-VariableFont_wght.ttf"), 16,
+            // Don't you even dare look at this code funny or it WILL break
+            font = fontAtlas.addFontFromMemoryTTF(
+                    loadFromResources("/font/inter-medium.ttf"), 16,
                     fontConfig, glyphRanges
             );
 
             ImGuiEvents.SETUP_FONTS.invoker().onSetup(fontAtlas, glyphRanges);
 
             fontAtlas.build();
-
             fontConfig.destroy();
 
-            imguiGlfw.init(window, true);
-            imguiGl3.init();
+            imguiGl3.updateFontsTexture();
 
             initialized = true;
         } catch (Throwable e) {
             Cicada.LOGGER.error("Failed to load ImGui. Are we missing platform binaries? Some dependent mods may not work as expected.", e);
             errored = true;
+        }
+    }
+
+    public static String unpackFile(String path) {
+        try {
+            //noinspection DataFlowIssue
+            return Files.copy(
+                    Paths.get(ImMyGui.class.getResource(path).toURI()),
+                    Files.createTempFile("cicada-", ""),
+                    StandardCopyOption.REPLACE_EXISTING
+            ).toString();
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -105,24 +119,31 @@ public class ImMyGui {
             return;
         }
 
-        imguiGl3.shutdown();
-        imguiGlfw.shutdown();
+        imguiGl3.dispose();
+        imguiGlfw.dispose();
 
         initialized = false;
     }
 
     public static void render(ImGuiThing thing) {
-        if (!initialized || errored || !ImGui.getIO().getFonts().isBuilt()) {
+        if (!initialized || errored) {
             return;
         }
 
         try {
-            imguiGl3.newFrame();
             imguiGlfw.newFrame();
             ImGui.newFrame();
+            ImGui.pushFont(font);
+
+            ImGui.begin("fhtfthfhttfh");
+
+            ImGui.text("This is a test \uD83D\uDC4D …");
+
+            ImGui.end();
 
             thing.render();
 
+            ImGui.popFont();
             ImGui.render();
             imguiGl3.renderDrawData(ImGui.getDrawData());
         } catch (Throwable e) {
