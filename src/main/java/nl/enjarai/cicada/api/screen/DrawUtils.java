@@ -23,13 +23,21 @@ public class DrawUtils {
         float oldBodyYaw = entity.bodyYaw;
         float oldYaw = entity.getYaw();
         float oldPitch = entity.getPitch();
-        float oldPrevHeadYaw = entity.prevHeadYaw;
+        /*? if >=1.21.5 {*/
+        float oldPrevHeadYaw = entity.lastHeadYaw;
+        /*?} else {*/
+        /*float oldPrevHeadYaw = entity.prevHeadYaw;
+        *//*?}*/
         float oldHeadYaw = entity.headYaw;
         entity.bodyYaw = 180.0F + yaw * 20.0F;
         entity.setYaw(180.0F + yaw * 40.0F);
         entity.setPitch(-pitch * 20.0F);
         entity.headYaw = entity.getYaw();
-        entity.prevHeadYaw = entity.getYaw();
+        /*? if >=1.21.5 {*/
+        entity.lastHeadYaw = entity.getYaw();
+        /*?} else {*/
+        /*entity.prevHeadYaw = entity.getYaw();
+         *//*?}*/
 
         /*? if >=1.20.5 {*/
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
@@ -50,7 +58,11 @@ public class DrawUtils {
         matrices.translate(0, -1, 0);
         matrices.multiply(entityRotation);
         matrices.translate(0, -1, 0);
-        DiffuseLighting.method_34742();
+        /*? if >=1.21.5 {*/
+        DiffuseLighting.enableGuiShaderLighting();
+        /*?} else {*/
+        /*DiffuseLighting.method_34742();
+        *//*?}*/
 
         EntityRenderDispatcher dispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
         if (pitchRotation != null) {
@@ -84,7 +96,11 @@ public class DrawUtils {
         entity.bodyYaw = oldBodyYaw;
         entity.setYaw(oldYaw);
         entity.setPitch(oldPitch);
-        entity.prevHeadYaw = oldPrevHeadYaw;
+        /*? if >=1.21.5 {*/
+        entity.lastHeadYaw = oldPrevHeadYaw;
+        /*?} else {*/
+        /*entity.prevHeadYaw = oldPrevHeadYaw;
+         *//*?}*/
         entity.headYaw = oldHeadYaw;
     }
 }

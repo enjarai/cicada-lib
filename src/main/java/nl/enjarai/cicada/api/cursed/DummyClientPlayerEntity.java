@@ -46,8 +46,8 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
         MinecraftClient.getInstance().getSkinProvider().fetchSkinTextures(getGameProfile()).thenAccept((textures) -> {
             skinTextures = textures.orElse(DefaultSkinHelper.getSkinTextures(getGameProfile()));
         });
-        /*?} else if >=1.20.2 {*//*
-        MinecraftClient.getInstance().getSkinProvider().fetchSkinTextures(getGameProfile()).thenAccept((textures) -> {
+        /*?} else if >=1.20.2 {*/
+        /*MinecraftClient.getInstance().getSkinProvider().fetchSkinTextures(getGameProfile()).thenAccept((textures) -> {
             skinTextures = textures;
         });
         *//*?} else {*/

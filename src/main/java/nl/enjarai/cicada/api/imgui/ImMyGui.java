@@ -135,12 +135,6 @@ public class ImMyGui {
             ImGui.newFrame();
             ImGui.pushFont(font);
 
-            ImGui.begin("fhtfthfhttfh");
-
-            ImGui.text("This is a test \uD83D\uDC4D …");
-
-            ImGui.end();
-
             thing.render();
 
             ImGui.popFont();

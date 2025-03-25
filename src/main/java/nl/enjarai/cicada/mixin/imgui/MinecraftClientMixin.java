@@ -17,8 +17,7 @@ public class MinecraftClientMixin {
     @Inject(
             method = "<init>",
             at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/systems/RenderSystem;initRenderer(IZ)V"
+                    value = "TAIL"
             )
     )
     private void initImgui(CallbackInfo ci) {
