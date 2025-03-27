@@ -6,6 +6,7 @@ import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import nl.enjarai.cicada.Cicada;
 import org.jetbrains.annotations.ApiStatus;
+import org.lwjgl.glfw.GLFW;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -140,6 +141,13 @@ public class ImMyGui {
             ImGui.popFont();
             ImGui.render();
             imguiGl3.renderDrawData(ImGui.getDrawData());
+
+            if (ImGui.getIO().hasConfigFlags(ImGuiConfigFlags.ViewportsEnable)) {
+                long backupCurrentContext = GLFW.glfwGetCurrentContext();
+                ImGui.updatePlatformWindows();
+                ImGui.renderPlatformWindowsDefault();
+                GLFW.glfwMakeContextCurrent(backupCurrentContext);
+            }
         } catch (Throwable e) {
             Cicada.LOGGER.error("Failed to render ImGui. Will stop trying for now. Some dependent mods may not work as expected.", e);
             errored = true;
