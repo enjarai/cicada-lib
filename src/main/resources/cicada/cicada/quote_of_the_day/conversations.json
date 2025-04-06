@@ -36,38 +36,6 @@
         }
       ]
     },
-    "cicada:quote/the_mineblocks": {
-      "priority": {
-        "priority": 10,
-        "override": 100
-      },
-      "lines": [
-        {
-          "order": 0,
-          "text": "'what'"
-        },
-        {
-          "order": 1,
-          "text": "'that's not you'"
-        },
-        {
-          "order": 2,
-          "text": "'mineblock8 was the eight version of you and the first version of louise and was eaten by dicedpixels in the bite of 87'"
-        },
-        {
-          "order": 3,
-          "text": "'mineblock9 was the ninth version of you and the second version of louise and sadly escaped, before infiltrating this thread as louise'"
-        },
-        {
-          "order": 4,
-          "text": "'mineblock10 was the tenth version of you and was stabbed'"
-        },
-        {
-          "order": 5,
-          "text": "'mineblock11 was the eleventh version of you and the only one deemed sane enough to be released in the wild'"
-        }
-      ]
-    },
     "cicada:quote/object_input_stream": {
       "priority": {
         "priority": 10,
