@@ -80,11 +80,14 @@ dependencies {
 ////	shade(api("io.github.spair:imgui-java-natives-windows:${property('deps.imgui')}"))
 //	shade(api("io.github.spair:imgui-java-natives-linux:${property('deps.imgui')}"))
 ////	shade(api("io.github.spair:imgui-java-natives-macos:${property('deps.imgui')}"))
-	shade(api(rootProject.files('deps/imgui-java-binding-1.86.11-10-g0dbf36c.jar')))
-	shade(api(rootProject.files('deps/imgui-java-lwjgl3-1.86.11-10-g0dbf36c.jar')))
-	shade(api(rootProject.files('deps/imgui-java-natives-linux-1.86.11-10-g0dbf36c.jar')))
-	shade(api(rootProject.files('deps/imgui-java-natives-macos-1.86.11-10-g0dbf36c.jar')))
-	shade(api(rootProject.files('deps/imgui-java-natives-windows-1.86.11-10-g0dbf36c.jar')))
+
+//	shade(api(rootProject.files('deps/imgui-java-binding-1.86.11-10-g0dbf36c.jar')))
+//	shade(api(rootProject.files('deps/imgui-java-lwjgl3-1.86.11-10-g0dbf36c.jar')))
+//	shade(api(rootProject.files('deps/imgui-java-natives-linux-1.86.11-10-g0dbf36c.jar')))
+//	shade(api(rootProject.files('deps/imgui-java-natives-macos-1.86.11-10-g0dbf36c.jar')))
+//	shade(api(rootProject.files('deps/imgui-java-natives-windows-1.86.11-10-g0dbf36c.jar')))
+
+	include(api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${property('deps.jackson')}"))
 
 	testmodImplementation sourceSets.main.output
 }

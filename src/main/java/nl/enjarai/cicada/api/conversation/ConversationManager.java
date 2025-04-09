@@ -1,25 +1,34 @@
 package nl.enjarai.cicada.api.conversation;
 
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import net.fabricmc.loader.api.FabricLoader;
 import nl.enjarai.cicada.Cicada;
 import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
+import nl.enjarai.cicada.api.conversation.yaml.YamlConversation;
+import nl.enjarai.cicada.api.conversation.yaml.YamlConversationFile;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
 import nl.enjarai.cicada.api.util.JsonSource;
+import nl.enjarai.cicada.api.util.ProperLogger;
+import nl.enjarai.cicada.api.util.YamlSource;
 import nl.enjarai.cicada.api.util.random.RandomUtil;
+import org.apache.commons.lang3.function.Functions;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
-public class ConversationManager {
+public class ConversationManager implements Logger {
     private static final ExecutorService THREAD_POOL = Executors.newFixedThreadPool(10, new ThreadFactoryBuilder()
             .setNameFormat("Cicada thread %d")
             .setThreadFactory(Executors.defaultThreadFactory())
@@ -27,7 +36,9 @@ public class ConversationManager {
             .build());
 
     private final Map<JsonSource, Consumer<String>> jsonSources = new HashMap<>();
+    private final List<YamlSource> yamlSources = new ArrayList<>();
     private final Map<String, Conversation> conversations = new ConcurrentHashMap<>();
+    private final List<YamlConversation> yamlConversations = new ArrayList<>();
 
     public static ExecutorService getThreadPool() {
         return THREAD_POOL;
@@ -38,20 +49,35 @@ public class ConversationManager {
                 .forEach(entrypoint -> entrypoint.registerConversations(this));
 
         // Concurrently loads all the conversations, getting them from their sources and decoding the json.
-        getConversationsFuture(jsonSources).join();
+        CompletableFuture.allOf(
+                getConversationsFuture(jsonSources),
+                getYamlConversationsFuture(yamlSources)
+        ).join();
 
         conversations.values().forEach(Conversation::complete);
     }
 
     public void run() {
-        RandomUtil.chooseWeighted(conversations.values().stream()
-                        .filter(Conversation::shouldRun)
-                        .toList())
-                .ifPresent(Conversation::run);
+        List<WeightedConversation> options = new ArrayList<>();
+
+        conversations.values().stream()
+                .filter(Conversation::shouldRun)
+                .forEach(c -> options.add(new WeightedConversation(c::run, c.getWeight())));
+        yamlConversations.stream()
+                .filter(YamlConversation::allRequiredMods)
+                .forEach(c -> options.add(new WeightedConversation(
+                        () -> c.play(this), c.priority())));
+
+        RandomUtil.chooseWeighted(options)
+                .ifPresent(c -> c.executor().run());
     }
 
     public void registerSource(JsonSource source, Consumer<String> logger) {
         jsonSources.put(source, logger);
+    }
+
+    public void registerSource(YamlSource source) {
+        yamlSources.add(source);
     }
 
     @Deprecated
@@ -74,7 +100,9 @@ public class ConversationManager {
     }
 
     protected void onLoadError(Exception e) {
-        Cicada.LOGGER.debug("Failed to load conversation source", e);
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            Cicada.LOGGER.info("Failed to load conversation source", e);
+        }
     }
 
     private CompletableFuture<Void> getConversationsFuture(Map<JsonSource, Consumer<String>> sources) {
@@ -94,6 +122,23 @@ public class ConversationManager {
                                 }),
                         THREAD_POOL
                 )).toArray(CompletableFuture[]::new)
+        );
+    }
+
+    private CompletableFuture<Void> getYamlConversationsFuture(List<YamlSource> sources) {
+        return CompletableFuture.allOf(sources.stream()
+                .map(s -> CompletableFuture.runAsync(
+                        () -> s.getSafely(this::onLoadError).ifPresent(yaml -> {
+                            try {
+                                yamlConversations.addAll(new YAMLMapper()
+                                        .readValue(yaml, YamlConversationFile.class).conversations().values());
+                            } catch (Exception e) {
+                                onLoadError(e);
+                            }
+                        }),
+                        THREAD_POOL
+                ))
+                .toArray(CompletableFuture[]::new)
         );
     }
 
@@ -143,5 +188,10 @@ public class ConversationManager {
             conversation.addParticipantCount(1);
             conversation.addParticipant(modId);
         });
+    }
+
+    @Override
+    public void log(String mod, String message) {
+        ProperLogger.getLogger(mod).info(message);
     }
 }

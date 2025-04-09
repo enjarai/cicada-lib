@@ -1,0 +1,129 @@
+conversations:
+  imgui:
+    priority: 100
+    lines:
+      - mod: trickster
+        text: "Did you really think it was a good idea to put ImGui in your MAIN LIBRARY MOD?>??"
+      - mod: trickster
+        text: "Y'know, the one that thousands of people download every day?"
+      - mod: cicada
+        text: "Yea yea I know, no need to reprimand me..."
+      - extend:
+          - mod: do_a_barrel_roll
+            text: "Hey! Don't I get a say in this? I was the most affected after all..."
+          - mod: cicada
+            text: "Nah, I think you're doing just fine actually"
+          - mod: do_a_barrel_roll
+            text: "What is that supposed to mean?"
+          - extend:
+              - mod: showmeyourskin
+                text: "Well, you're by far the richest here in terms of downloads aren't you?"
+              - mod: do_a_barrel_roll
+                text: "Like you're one to talk!"
+  meow:
+    priority: 100
+    lines:
+      - mod: cicada
+        text: "Meow"
+      - extend:
+          - mod: do_a_barrel_roll
+            text: "Mrrp!"
+      - extend:
+          - mod: showmeyourskin
+            text: "Mrrow meow!"
+      - extend:
+          - mod: trickster
+            text: "Nyaaa~!!"
+      - extend:
+          - mod: mini_tardis
+            text: "Prrrp..."
+      - extend:
+          - mod: blahaj-totem
+            text: "Meow Mrrp~!!"
+      - extend:
+          - mod: headpats
+            text: "Nya!!!!"
+  moon_art:
+    priority: 100
+    lines:
+      - mod: trickster
+        text: "\n\
+        🌕🌕🌕🌕🌕🌕🌕🌕🌕🌕🌕🌕
+        
+        🌕🌕🌕🌒🌕🌖🌒🌕🌕🌕🌕🌕
+        
+        🌕🌕🌖🌑🌓🌑🌑🌕🌕🌕🌕🌕
+        
+        🌕🌕🌗🌑🌑🌑🌑🌔🌕🌕🌕🌕
+        
+        🌕🌕🌘🌕🌑🌕🌑🌔🌖🌑🌕🌕
+        
+        🌕🌕🌖🌑🌑🌑🌑🌕🌕🌑🌔🌕
+        
+        🌕🌕🌕🌖🌑🌑🌔🌕🌕🌑🌔🌕
+        
+        🌕🌕🌕🌘🌑🌑🌒🌕🌕🌑🌔🌕
+        
+        🌕🌕🌕🌘🌑🌑🌑🌔🌖🌑🌕🌕
+        
+        🌕🌕🌕🌑🌑🌑🌑🌒🌑🌒🌕🌕
+        
+        🌕🌕🌕🌑🌑🌑🌑🌑🌒🌕🌕🌕
+        "
+      - mod: trickster
+        text: "Look!! Pretty art!!!"
+      - extend:
+          - mod: headpats
+            text: "Ohmygosh thats AMAZINGGG!!"
+      - extend:
+          - mod: do_a_barrel_roll
+            text: "Hmmm, are you sure thats going to display properly for everyone?"
+          - mod: do_a_barrel_roll
+            text: "Emoji tend to be fucky after all..."
+          - mod: trickster
+            text: "Ehhh whatevs, don't be a killjoy old man!"
+  lenny:
+    priority: 100
+    lines:
+      - mod: showmeyourskin
+        text: "( ͡° ͜ʖ ͡°)"
+      - extend:
+          - mod: do_a_barrel_roll
+            text: "Omg what is that..."
+          - mod: showmeyourskin
+            text: "It's my face when you cause a crash again (͠≖ ͜ʖ͠≖)"
+          - mod: do_a_barrel_roll
+            text: "How are you even pronouncing those?"
+      - extend:
+          - mod: trickster
+            text: "OH MY GOD ITS ADORABLE!!!!"
+  elytratrims:
+    priority: 100
+    lines:
+      - mod: elytratrims
+      - mod: do_a_barrel_roll
+        text: "Oh Elytra Trims hai!"
+      - mod: do_a_barrel_roll
+        text: "My friend!"
+      - mod: do_a_barrel_roll
+        text: "My buddy!"
+      - mod: do_a_barrel_roll
+        text: "My pal!"
+  modfest:
+    priority: 100
+    lines:
+      - mod: trickster
+        text: "As seen on ModFest: Carnival!!"
+  json:
+    priority: 100
+    lines:
+      - mod: cicada
+      - extend:
+          - mod: trickster
+            text: "I used the JSON to destroy the JSON."
+      - extend:
+          - mod: headpats
+            text: "I used the JSON to destroy the JSON."
+      - extend:
+          - mod: recursiveresources
+            text: "I used the JSON to destroy the JSON."

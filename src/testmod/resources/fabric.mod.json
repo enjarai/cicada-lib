@@ -33,6 +33,10 @@
     "cicada": "*"
   },
 
+  "provides": [
+    "trickster"
+  ],
+
   "custom": {
     "modmenu": {
       "parent": {

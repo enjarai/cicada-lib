@@ -1,0 +1,15 @@
+conversations:
+  testmod:test:
+    priority: 100009999999
+    lines:
+      - mod: cicada-test
+        text: "Did you really think it was a good idea to put ImGui in your MAIN LIBRARY MOD?>??"
+      - mod: cicada-test
+        text: "Y'know, the one that thousands of people download every day?"
+      - mod: cicada
+        text: "Yea yea I know, no need to reprimand me..."
+      - extend:
+          - mod: cicada-test
+            text: "Hey! Don't I get a say in this? I was the most affected after all..."
+          - mod: cicada
+            text: "Yea fine, I get it already..."

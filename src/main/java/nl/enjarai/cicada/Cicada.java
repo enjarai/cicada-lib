@@ -8,6 +8,7 @@ import nl.enjarai.cicada.api.conversation.ConversationManager;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
 import nl.enjarai.cicada.api.util.JsonSource;
 import nl.enjarai.cicada.api.util.ProperLogger;
+import nl.enjarai.cicada.api.util.YamlSource;
 import nl.enjarai.cicada.util.CapeHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,11 @@ public final class Cicada implements ModInitializer, ClientModInitializer, Cicad
 				JsonSource.fromUrl("https://raw.githubusercontent.com/enjarai/cicada-lib/master/src/main/resources/cicada/cicada/quote_of_the_day/conversations.json")
 						.or(JsonSource.fromResource("cicada/cicada/quote_of_the_day/conversations.json")),
 				QUOTE_OF_THE_DAY_LOGGER::info
+		);
+
+		conversationManager.registerSource(
+				YamlSource.fromUrl("https://raw.githubusercontent.com/enjarai/cicada-lib/master/src/main/resources/cicada/cicada/conversations.yml")
+						.or(YamlSource.fromResource("cicada/cicada/conversations.yml"))
 		);
 	}
 
