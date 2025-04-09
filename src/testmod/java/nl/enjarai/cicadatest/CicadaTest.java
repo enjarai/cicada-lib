@@ -3,7 +3,6 @@ package nl.enjarai.cicadatest;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import nl.enjarai.cicada.api.conversation.ConversationManager;
-import nl.enjarai.cicada.api.imgui.ImGuiThings;
 import nl.enjarai.cicada.api.util.AbstractModConfig;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
 import nl.enjarai.cicada.api.util.JsonSource;
@@ -36,8 +35,6 @@ public class CicadaTest implements ModInitializer, CicadaEntrypoint {
         LOGGER.warn("testInt: " + config.testInt);
 
         config.save();
-
-        ImGuiThings.add(new ImGuiTest());
 
 //        var funnyVec = new Vec3d(1, 2, 3);
 //        LOGGER.warn("Funny vector " + funnyVec.fromVector3d(funnyVec.toVector3d().mul(2)).getZ());

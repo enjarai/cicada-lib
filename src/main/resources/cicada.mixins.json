@@ -14,8 +14,6 @@
     "EntityRenderDispatcherMixin",
     "EntityRendererMixin",
     "EntityRenderStateMixin",
-    "cosmetic.PlayerListEntryMixin",
-    "imgui.RenderSystemMixin",
-    "imgui.MinecraftClientMixin"
+    "cosmetic.PlayerListEntryMixin"
   ]
 }
