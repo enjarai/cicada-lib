@@ -14,22 +14,16 @@ import nl.enjarai.cicada.api.util.JsonSource;
 import nl.enjarai.cicada.api.util.ProperLogger;
 import nl.enjarai.cicada.api.util.YamlSource;
 import nl.enjarai.cicada.api.util.random.RandomUtil;
-import org.apache.commons.lang3.function.Functions;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class ConversationManager implements Logger {
-    private static final ExecutorService THREAD_POOL = Executors.newFixedThreadPool(10, new ThreadFactoryBuilder()
+    private static final ExecutorService THREAD_POOL = Executors.newFixedThreadPool(1, new ThreadFactoryBuilder()
             .setNameFormat("Cicada thread %d")
             .setThreadFactory(Executors.defaultThreadFactory())
             .setDaemon(true)
@@ -37,7 +31,7 @@ public class ConversationManager implements Logger {
 
     private final Map<JsonSource, Consumer<String>> jsonSources = new HashMap<>();
     private final List<YamlSource> yamlSources = new ArrayList<>();
-    private final Map<String, Conversation> conversations = new ConcurrentHashMap<>();
+    private final Map<String, Conversation> conversations = new HashMap<>();
     private final List<YamlConversation> yamlConversations = new ArrayList<>();
 
     public static ExecutorService getThreadPool() {
@@ -47,12 +41,11 @@ public class ConversationManager implements Logger {
     public void init() {
         FabricLoader.getInstance().getEntrypoints("cicada", CicadaEntrypoint.class)
                 .forEach(entrypoint -> entrypoint.registerConversations(this));
+    }
 
-        // Concurrently loads all the conversations, getting them from their sources and decoding the json.
-        CompletableFuture.allOf(
-                getConversationsFuture(jsonSources),
-                getYamlConversationsFuture(yamlSources)
-        ).join();
+    public void load() {
+        getConversationsFuture(jsonSources);
+        getYamlConversationsFuture(yamlSources);
 
         conversations.values().forEach(Conversation::complete);
     }
@@ -105,41 +98,32 @@ public class ConversationManager implements Logger {
         }
     }
 
-    private CompletableFuture<Void> getConversationsFuture(Map<JsonSource, Consumer<String>> sources) {
-        return CompletableFuture.allOf(sources.entrySet().stream()
-                .map(entry -> CompletableFuture.runAsync(
-                        () -> entry.getKey().getSafely(this::onLoadError)
-                                .ifPresent(json -> {
-                                    try {
-                                        decodeSideJson(json, line -> {
-                                            if (line instanceof SimpleLine simpleLine) {
-                                                simpleLine.setSourceLogger(entry.getValue());
-                                            }
-                                        });
-                                    } catch (Exception e) {
-                                        onLoadError(e);
-                                    }
-                                }),
-                        THREAD_POOL
-                )).toArray(CompletableFuture[]::new)
-        );
+    private void getConversationsFuture(Map<JsonSource, Consumer<String>> sources) {
+        sources.forEach((key, value) -> key.getSafely(this::onLoadError)
+                .ifPresent(json -> {
+                    try {
+                        decodeSideJson(json, line -> {
+                            if (line instanceof SimpleLine simpleLine) {
+                                simpleLine.setSourceLogger(value);
+                            }
+                        });
+                    } catch (Exception e) {
+                        onLoadError(e);
+                    }
+                }));
     }
 
-    private CompletableFuture<Void> getYamlConversationsFuture(List<YamlSource> sources) {
-        return CompletableFuture.allOf(sources.stream()
-                .map(s -> CompletableFuture.runAsync(
-                        () -> s.getSafely(this::onLoadError).ifPresent(yaml -> {
-                            try {
-                                yamlConversations.addAll(new YAMLMapper()
-                                        .readValue(yaml, YamlConversationFile.class).conversations().values());
-                            } catch (Exception e) {
-                                onLoadError(e);
-                            }
-                        }),
-                        THREAD_POOL
-                ))
-                .toArray(CompletableFuture[]::new)
-        );
+    private void getYamlConversationsFuture(List<YamlSource> sources) {
+        sources.forEach(s -> CompletableFuture.runAsync(
+                () -> s.getSafely(this::onLoadError).ifPresent(yaml -> {
+                    try {
+                        yamlConversations.addAll(new YAMLMapper()
+                                .readValue(yaml, YamlConversationFile.class).conversations().values());
+                    } catch (Exception e) {
+                        onLoadError(e);
+                    }
+                })
+        ));
     }
 
     private void decodeSideJson(JsonObject json, Consumer<Line> lineModifier) {
@@ -158,9 +142,9 @@ public class ConversationManager implements Logger {
                 conversation.addCondition(LineCondition.CODEC.parse(JsonOps.INSTANCE, conversationJson.get("condition"))
                         /*? if >=1.20.5 {*/
                         .getOrThrow());
-                        /*?} else {*/
-                        /*.getOrThrow(false, string -> {}));
-                        *//*?}*/
+                /*?} else {*/
+                /*.getOrThrow(false, string -> {}));
+                 *//*?}*/
             }
             if (conversationJson.has("priority")) {
                 var priority = conversationJson.getAsJsonObject("priority");
@@ -176,9 +160,9 @@ public class ConversationManager implements Logger {
                 var line = SimpleLine.CODEC.parse(JsonOps.INSTANCE, lineJson)
                         /*? if >=1.20.5 {*/
                         .getOrThrow();
-                        /*?} else {*/
-                        /*.getOrThrow(false, string -> {});
-                        *//*?}*/
+                /*?} else {*/
+                /*.getOrThrow(false, string -> {});
+                 *//*?}*/
 
                 line.setConversation(conversation);
                 lineModifier.accept(line);

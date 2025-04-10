@@ -24,20 +24,20 @@ public class DrawUtils {
         float oldYaw = entity.getYaw();
         float oldPitch = entity.getPitch();
         /*? if >=1.21.5 {*/
-        float oldPrevHeadYaw = entity.lastHeadYaw;
-        /*?} else {*/
-        /*float oldPrevHeadYaw = entity.prevHeadYaw;
-        *//*?}*/
+        /*float oldPrevHeadYaw = entity.lastHeadYaw;
+        *//*?} else {*/
+        float oldPrevHeadYaw = entity.prevHeadYaw;
+        /*?}*/
         float oldHeadYaw = entity.headYaw;
         entity.bodyYaw = 180.0F + yaw * 20.0F;
         entity.setYaw(180.0F + yaw * 40.0F);
         entity.setPitch(-pitch * 20.0F);
         entity.headYaw = entity.getYaw();
         /*? if >=1.21.5 {*/
-        entity.lastHeadYaw = entity.getYaw();
-        /*?} else {*/
-        /*entity.prevHeadYaw = entity.getYaw();
-         *//*?}*/
+        /*entity.lastHeadYaw = entity.getYaw();
+        *//*?} else {*/
+        entity.prevHeadYaw = entity.getYaw();
+         /*?}*/
 
         /*? if >=1.20.5 {*/
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
@@ -59,10 +59,10 @@ public class DrawUtils {
         matrices.multiply(entityRotation);
         matrices.translate(0, -1, 0);
         /*? if >=1.21.5 {*/
-        DiffuseLighting.enableGuiShaderLighting();
-        /*?} else {*/
-        /*DiffuseLighting.method_34742();
-        *//*?}*/
+        /*DiffuseLighting.enableGuiShaderLighting();
+        *//*?} else {*/
+        DiffuseLighting.method_34742();
+        /*?}*/
 
         EntityRenderDispatcher dispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
         if (pitchRotation != null) {
@@ -97,10 +97,10 @@ public class DrawUtils {
         entity.setYaw(oldYaw);
         entity.setPitch(oldPitch);
         /*? if >=1.21.5 {*/
-        entity.lastHeadYaw = oldPrevHeadYaw;
-        /*?} else {*/
-        /*entity.prevHeadYaw = oldPrevHeadYaw;
-         *//*?}*/
+        /*entity.lastHeadYaw = oldPrevHeadYaw;
+        *//*?} else {*/
+        entity.prevHeadYaw = oldPrevHeadYaw;
+         /*?}*/
         entity.headYaw = oldHeadYaw;
     }
 }

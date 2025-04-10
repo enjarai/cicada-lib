@@ -1,6 +1,6 @@
 conversations:
   imgui:
-    priority: 100
+    priority: 100999999
     lines:
       - mod: trickster
         text: "Did you really think it was a good idea to put ImGui in your MAIN LIBRARY MOD?>??"
@@ -118,6 +118,7 @@ conversations:
     priority: 100
     lines:
       - mod: cicada
+        text: "I used the JSON to destroy the JSON."
       - extend:
           - mod: trickster
             text: "I used the JSON to destroy the JSON."

@@ -123,10 +123,10 @@ public final class CapeHandler {
 
                         getCapeTexture(),
                         /*? if >=1.21.5 {*/
-                        new NativeImageBackedTexture(() -> getCapeTexture().toString(), parseImg(cape, 64, 32))
-                        /*?} else {*/
-                        /*new NativeImageBackedTexture(parseImg(cape, 64, 32))
-                         *//*?}*/
+                        /*new NativeImageBackedTexture(() -> getCapeTexture().toString(), parseImg(cape, 64, 32))
+                        *//*?} else {*/
+                        new NativeImageBackedTexture(parseImg(cape, 64, 32))
+                         /*?}*/
                 );
                 hasCape = meta.cape();
                 hasElytra = meta.elytra();
@@ -145,10 +145,10 @@ public final class CapeHandler {
                 MinecraftClient.getInstance().getTextureManager().registerTexture(
                         getDecorationsTexture(),
                         /*? if >=1.21.5 {*/
-                        new NativeImageBackedTexture(() -> getCapeTexture().toString(), parseImg(silliness, 64, 64))
-                        /*?} else {*/
-                        /*new NativeImageBackedTexture(parseImg(silliness, 64, 64))
-                         *//*?}*/
+                        /*new NativeImageBackedTexture(() -> getCapeTexture().toString(), parseImg(silliness, 64, 64))
+                        *//*?} else {*/
+                        new NativeImageBackedTexture(parseImg(silliness, 64, 64))
+                         /*?}*/
                 );
                 hasDecorations = true;
             });
