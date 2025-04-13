@@ -87,7 +87,8 @@ dependencies {
 //	shade(api(rootProject.files('deps/imgui-java-natives-macos-1.86.11-10-g0dbf36c.jar')))
 //	shade(api(rootProject.files('deps/imgui-java-natives-windows-1.86.11-10-g0dbf36c.jar')))
 
-	include(api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${property('deps.jackson')}"))
+//	include(api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${property('deps.jackson')}"))
+	include(api("org.yaml:snakeyaml:${property('deps.snakeyaml')}"))
 
 	testmodImplementation sourceSets.main.output
 }

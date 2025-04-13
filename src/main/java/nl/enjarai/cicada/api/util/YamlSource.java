@@ -1,19 +1,18 @@
 package nl.enjarai.cicada.api.util;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -26,12 +25,13 @@ import java.util.function.Consumer;
  */
 public interface YamlSource {
     YamlSource EMPTY = Optional::empty;
+    Yaml YAML = new Yaml();
 
     /**
      * Creates a YamlSource from a String, attempting to parse it as json.
      */
     static YamlSource fromString(String string) {
-        return () -> Optional.of(string);
+        return () -> Optional.of(YAML.load(string));
     }
 
     /**
@@ -45,7 +45,11 @@ public interface YamlSource {
      * Creates a YamlSource from a file at the given {@link Path}.
      */
     static YamlSource fromFile(Path path) {
-        return () -> Optional.of(Files.readString(path));
+        return () -> {
+            try (BufferedReader in = Files.newBufferedReader(path)) {
+                return Optional.of(YAML.load(in));
+            }
+        };
     }
 
     /**
@@ -75,7 +79,7 @@ public interface YamlSource {
             URLConnection conn = url.openConnection();
             conn.connect();
             try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                return Optional.of(in.lines().reduce("", (a, b) -> a + "\n" + b));
+                return Optional.of(YAML.load(in));
             }
         };
     }
@@ -86,15 +90,12 @@ public interface YamlSource {
      */
     static YamlSource fromResource(String path) {
         return () -> {
-            try {
-                var resource = YamlSource.class.getClassLoader().getResource(path);
-                if (resource == null) {
-                    throw new IOException("Resource not found: " + path);
-                }
-                var data = Files.readString(Path.of(resource.toURI()));
-                return Optional.of(data);
-            } catch (URISyntaxException e) {
+            var resourceStream = JsonSource.class.getClassLoader().getResourceAsStream(path);
+            if (resourceStream == null) {
                 throw new IOException("Resource not found: " + path);
+            }
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(resourceStream))) {
+                return Optional.of(YAML.load(in));
             }
         };
     }
@@ -103,7 +104,7 @@ public interface YamlSource {
      * Gets the yaml data from this source. Returns an {@link Optional} containing the yaml data,
      * or {@link Optional#empty()} if the source is empty. May throw an in the process.
      */
-    Optional<String> get() throws IOException;
+    Optional<Map<Object, Object>> get() throws IOException;
 
     /**
      * Sources this yaml, but returns an {@link Optional#empty()} if an {@link IOException} is thrown in the process.
@@ -111,7 +112,7 @@ public interface YamlSource {
      *     Also accepts a {@link Consumer} that will be called with the exception if one is thrown.
      * </p>
      */
-    default Optional<String> getSafely(Consumer<Exception> errorHandler) {
+    default Optional<Map<Object, Object>> getSafely(Consumer<Exception> errorHandler) {
         try {
             return get();
         } catch (IOException | JsonSyntaxException | JsonIOException e) {
@@ -123,7 +124,7 @@ public interface YamlSource {
     /**
      * Sources this yaml, but returns an {@link Optional#empty()} if an {@link IOException} is thrown in the process.
      */
-    default Optional<String> getSilently() {
+    default Optional<Map<Object, Object>> getSilently() {
         return getSafely(e -> {});
     }
 

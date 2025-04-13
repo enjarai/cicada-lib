@@ -42,19 +42,19 @@ public final class Cicada implements ModInitializer, ClientModInitializer, Cicad
 	public void registerConversations(ConversationManager conversationManager) {
 		conversationManager.registerSource(
 				JsonSource.fromUrl("https://raw.githubusercontent.com/enjarai/cicada-lib/master/src/main/resources/cicada/cicada/conversations.json")
-						.or(JsonSource.fromResource("/cicada/cicada/conversations.json")),
+						.or(JsonSource.fromResource("cicada/cicada/conversations.json")),
 				LOGGER::info
 		);
 
 		conversationManager.registerSource(
 				JsonSource.fromUrl("https://raw.githubusercontent.com/enjarai/cicada-lib/master/src/main/resources/cicada/cicada/quote_of_the_day/conversations.json")
-						.or(JsonSource.fromResource("/cicada/cicada/quote_of_the_day/conversations.json")),
+						.or(JsonSource.fromResource("cicada/cicada/quote_of_the_day/conversations.json")),
 				QUOTE_OF_THE_DAY_LOGGER::info
 		);
 
 		conversationManager.registerSource(
 				YamlSource.fromUrl("https://raw.githubusercontent.com/enjarai/cicada-lib/master/src/main/resources/cicada/cicada/conversations.yml")
-						.or(YamlSource.fromResource("/cicada/cicada/conversations.yml"))
+						.or(YamlSource.fromResource("cicada/cicada/conversations.yml"))
 		);
 	}
 

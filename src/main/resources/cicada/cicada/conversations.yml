@@ -1,6 +1,6 @@
 conversations:
   imgui:
-    priority: 100999999
+    priority: 100
     lines:
       - mod: trickster
         text: "Did you really think it was a good idea to put ImGui in your MAIN LIBRARY MOD?>??"

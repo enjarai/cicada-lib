@@ -1,6 +1,6 @@
 conversations:
   testmod:test:
-    priority: 100009999999
+    priority: 10000999
     lines:
       - mod: cicada-test
         text: "Did you really think it was a good idea to put ImGui in your MAIN LIBRARY MOD?>??"

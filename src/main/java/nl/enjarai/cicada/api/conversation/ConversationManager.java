@@ -1,6 +1,7 @@
 package nl.enjarai.cicada.api.conversation;
 
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
@@ -9,6 +10,7 @@ import nl.enjarai.cicada.Cicada;
 import nl.enjarai.cicada.api.conversation.conditions.LineCondition;
 import nl.enjarai.cicada.api.conversation.yaml.YamlConversation;
 import nl.enjarai.cicada.api.conversation.yaml.YamlConversationFile;
+import nl.enjarai.cicada.api.conversation.yaml.YamlLine;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
 import nl.enjarai.cicada.api.util.JsonSource;
 import nl.enjarai.cicada.api.util.ProperLogger;
@@ -17,7 +19,6 @@ import nl.enjarai.cicada.api.util.random.RandomUtil;
 
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -114,16 +115,18 @@ public class ConversationManager implements Logger {
     }
 
     private void getYamlConversationsFuture(List<YamlSource> sources) {
-        sources.forEach(s -> CompletableFuture.runAsync(
-                () -> s.getSafely(this::onLoadError).ifPresent(yaml -> {
-                    try {
-                        yamlConversations.addAll(new YAMLMapper()
-                                .readValue(yaml, YamlConversationFile.class).conversations().values());
-                    } catch (Exception e) {
-                        onLoadError(e);
-                    }
-                })
-        ));
+        sources.forEach(s -> {
+            var test = s.getSafely(this::onLoadError);
+            test.ifPresent(yaml -> {
+                try {
+                    var file = decodeConversationsYaml(yaml);
+                    var convo = file.conversations().values();
+                    yamlConversations.addAll(convo);
+                } catch (Exception e) {
+                    onLoadError(e);
+                }
+            });
+        });
     }
 
     private void decodeSideJson(JsonObject json, Consumer<Line> lineModifier) {
@@ -172,6 +175,43 @@ public class ConversationManager implements Logger {
             conversation.addParticipantCount(1);
             conversation.addParticipant(modId);
         });
+    }
+
+    @SuppressWarnings("unchecked")
+    private YamlConversationFile decodeConversationsYaml(Map<Object, Object> yaml) {
+        var conversations = ImmutableMap.<String, YamlConversation>builder();
+
+        for (var conversation : ((Map<String, Map<String, Object>>) yaml.get("conversations")).entrySet()) {
+            var key = conversation.getKey();
+            var priority = (Integer) conversation.getValue().get("priority");
+            var lines = decodeYamlLines((List<Map<String, Object>>) conversation.getValue().get("lines"));
+
+            conversations.put(key, new YamlConversation(lines, priority));
+        }
+
+        return new YamlConversationFile(conversations.build());
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<YamlLine> decodeYamlLines(List<Map<String, Object>> lines) {
+        var result = ImmutableList.<YamlLine>builder();
+
+        for (var line : lines) {
+            if (line.containsKey("extend")) {
+                result.add(new YamlLine(null, null,
+                        decodeYamlLines((List<Map<String, Object>>) line.get("extend"))));
+            } else {
+                var mod = (String) line.get("mod");
+                String text = null;
+                if (line.containsKey("text")) {
+                    text = (String) line.get("text");
+                }
+
+                result.add(new YamlLine(mod, text, null));
+            }
+        }
+
+        return result.build();
     }
 
     @Override
