@@ -26,9 +26,9 @@ import java.util.concurrent.Executors;
 // https://www.gnu.org/licenses/lgpl-3.0.en.html
 @Environment(EnvType.CLIENT)
 public final class CapeHandler {
-    private static final String META_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/meta.json";
-    private static final String CAPE_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/cape.png";
-    private static final String DECORATIONS_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/decorations.png";
+//    private static final String META_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/meta.json";
+//    private static final String CAPE_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/cape.png";
+//    private static final String DECORATIONS_URL = "https://enjarai.dev/cicada-lib/meta/capes/%s/decorations.png";
 
     private static final ExecutorService capeExecutor = Executors.newFixedThreadPool(2);
     private static final HashMap<UUID, CapeHandler> instances = new HashMap<>();
@@ -95,23 +95,24 @@ public final class CapeHandler {
     }
 
     private void loadCape() {
-        try {
-            var metaUrl = String.format(META_URL, uuid);
-            var metaConnection = getConnection(metaUrl);
-            meta = CapeMeta.fromJson(metaConnection.getInputStream());
-
-            if (meta.cape() || meta.elytra()) {
-                var capeUrl = String.format(CAPE_URL, uuid);
-                var capeConnection = getConnection(capeUrl);
-                setCapeTexture(capeConnection.getInputStream(), meta);
-            }
-            if (meta.sillyHairs()) {
-                var decoUrl = String.format(DECORATIONS_URL, uuid);
-                var decoConnection = getConnection(decoUrl);
-                setDecorationsTexture(decoConnection.getInputStream());
-            }
-        } catch (IOException | JsonParseException ignored) {
-        }
+//        try {
+            // OH MY GOD PLEASE STOP DDOSSING ME
+//            var metaUrl = String.format(META_URL, uuid);
+//            var metaConnection = getConnection(metaUrl);
+//            meta = CapeMeta.fromJson(metaConnection.getInputStream());
+//
+//            if (meta.cape() || meta.elytra()) {
+//                var capeUrl = String.format(CAPE_URL, uuid);
+//                var capeConnection = getConnection(capeUrl);
+//                setCapeTexture(capeConnection.getInputStream(), meta);
+//            }
+//            if (meta.sillyHairs()) {
+//                var decoUrl = String.format(DECORATIONS_URL, uuid);
+//                var decoConnection = getConnection(decoUrl);
+//                setDecorationsTexture(decoConnection.getInputStream());
+//            }
+//        } catch (IOException | JsonParseException ignored) {
+//        }
     }
 
     @SuppressWarnings("UnusedReturnValue")
