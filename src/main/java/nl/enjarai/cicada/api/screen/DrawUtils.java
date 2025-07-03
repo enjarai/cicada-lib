@@ -6,7 +6,6 @@ import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import org.joml.Matrix4f;
@@ -60,7 +59,7 @@ public class DrawUtils {
 
         EntityRenderDispatcher entityRenderDispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
         EntityRenderer<? super LivingEntity, ?> entityRenderer = entityRenderDispatcher.getRenderer(entity);
-        EntityRenderState entityRenderState = entityRenderer.getAndUpdateRenderState(entity, 1.0F);
+        var entityRenderState = entityRenderer.getAndUpdateRenderState(entity, 1.0F);
         entityRenderState.hitbox = null;
         context.addEntity(entityRenderState, p, vector3f, entityRotation, pitchRotation, x1, y1, x2, y2);
         /*?} else {*/
@@ -98,7 +97,8 @@ public class DrawUtils {
         matrices.translate(0, -1, 0);
         matrices.multiply(entityRotation);
         matrices.translate(0, -1, 0);
-        /*? if >=1.21.5 && <1.21.6 {*/
+        /*? if >=1.21.6 {*/
+        /*?} else if >=1.21.5 {*/
         /*DiffuseLighting.enableGuiShaderLighting();
         *//*?} else {*/
         /*DiffuseLighting.method_34742();
