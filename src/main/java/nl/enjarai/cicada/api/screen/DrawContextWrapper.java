@@ -11,8 +11,18 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 public class DrawContextWrapper {
-    /*? if >=1.20 {*/
+    /*? if >=1.21.6 {*/
     private final net.minecraft.client.gui.DrawContext context;
+
+    public DrawContextWrapper(net.minecraft.client.gui.DrawContext context) {
+        this.context = context;
+    }
+
+    public net.minecraft.client.gui.DrawContext context() {
+        return context;
+    }
+    /*?} else if >=1.20 {*/
+    /*private final net.minecraft.client.gui.DrawContext context;
 
     public DrawContextWrapper(net.minecraft.client.gui.DrawContext context) {
         this.context = context;
@@ -21,7 +31,7 @@ public class DrawContextWrapper {
     public MatrixStack matrices() {
         return context.getMatrices();
     }
-    /*?} else {*/
+    *//*?} else {*/
     /*private final MatrixStack stack;
 
     public DrawContextWrapper(MatrixStack stack) {

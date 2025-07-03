@@ -65,6 +65,9 @@ public class DummyClientPlayNetworkHandler extends ClientPlayNetworkHandler {
                 BlockTags.INFINIBURN_OVERWORLD,
                 DimensionTypes.OVERWORLD_ID,
                 0.0f,
+                /*? if >=1.21.6 {*/
+                Optional.of(384),
+                /*?}*/
                 new DimensionType.MonsterSettings(
                         false,
                         true,

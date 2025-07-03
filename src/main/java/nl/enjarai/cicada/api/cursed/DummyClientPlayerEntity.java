@@ -17,6 +17,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+/*? if >=1.21.6 {*/
+import net.minecraft.util.PlayerInput;
+/*?}*/
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -40,7 +43,11 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
     }
 
     private DummyClientPlayerEntity() {
-        super(MinecraftClient.getInstance(), DummyClientWorld.getInstance(), DummyClientPlayNetworkHandler.getInstance(), null, null, false, false);
+        /*? if >=1.21.6 {*/
+        super(MinecraftClient.getInstance(), DummyClientWorld.getInstance(), DummyClientPlayNetworkHandler.getInstance(), null, null, PlayerInput.DEFAULT, false);
+        /*?} else {*/
+        /*super(MinecraftClient.getInstance(), DummyClientWorld.getInstance(), DummyClientPlayNetworkHandler.getInstance(), null, null, false, false);
+        *//*?}*/
         setUuid(UUID.randomUUID());
         /*? if >=1.21.4 {*/
         MinecraftClient.getInstance().getSkinProvider().fetchSkinTextures(getGameProfile()).thenAccept((textures) -> {
@@ -74,7 +81,11 @@ public class DummyClientPlayerEntity extends ClientPlayerEntity {
     }
 
     public DummyClientPlayerEntity(@Nullable PlayerEntity player, UUID uuid, net.minecraft.client.util.SkinTextures skinTextures, ClientWorld world, ClientPlayNetworkHandler networkHandler) {
-        super(MinecraftClient.getInstance(), world, networkHandler, null, null, false, false);
+        /*? if >=1.21.6 {*/
+        super(MinecraftClient.getInstance(), world, networkHandler, null, null, PlayerInput.DEFAULT, false);
+        /*?} else {*/
+        /*super(MinecraftClient.getInstance(), world, networkHandler, null, null, false, false);
+        *//*?}*/
         this.player = player;
         setUuid(uuid);
         this.skinTextures = skinTextures;

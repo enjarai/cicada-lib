@@ -19,7 +19,11 @@ public class TitleScreenMixin {
             at = @At("TAIL")
     )
     private void renderTests(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        DrawUtils.drawEntityFollowingMouse(context.getMatrices(), 100, 100, 40, 0, mouseX, mouseY, DummyClientPlayerEntity.getInstance());
+        //? if >=1.21.6 {
+        DrawUtils.drawEntityFollowingMouse(context, 100, 100, 140, 180, 40, 0.0625F, 0, mouseX, mouseY, DummyClientPlayerEntity.getInstance());
+        //?} else {
+        /*DrawUtils.drawEntityFollowingMouse(context.getMatrices(), 100, 100, 40, 0, mouseX, mouseY, DummyClientPlayerEntity.getInstance());
+        *///?}
     }
     //?} else {
     /*@Inject(

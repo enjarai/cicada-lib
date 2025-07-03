@@ -5,16 +5,30 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fStack;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 public class DrawUtils {
-    public static void drawEntityFollowingMouse(MatrixStack matrices, int x, int y, int size, double rotation, double mouseX, double mouseY, LivingEntity entity) {
+    public static void drawEntityFollowingMouse(
+            /*? if >=1.21.6 {*/
+            net.minecraft.client.gui.DrawContext context, int x1, int y1, int x2, int y2, int size, float scale,
+            /*?} else {*/
+            /*MatrixStack matrices, int x, int y, int size,
+             *//*?}*/
+            double rotation, double mouseX, double mouseY, LivingEntity entity) {
+        /*? if >=1.21.6 {*/
+        float x = (x1 + x2) / 2.0F;
+        float y = (y1 + y2) / 2.0F;
+        /*?}*/
+
         float yaw = (float) (Math.atan((-mouseX + x) / 40.0F) * Math.sin((rotation / 180.0 + 0.5) * Math.PI));
-        float pitch = (float) Math.atan((-mouseY + y - size * 1.6f) / 40.0F);
+        float pitch = (float) Math.atan((-mouseY + y - size * 0.65f) / 40.0F);
 
         Quaternionf entityRotation = new Quaternionf().rotateZ((float) Math.PI);
         Quaternionf pitchRotation = new Quaternionf().rotateX(pitch * 20.0F * 0.017453292F);
@@ -39,6 +53,32 @@ public class DrawUtils {
         /*entity.prevHeadYaw = entity.getYaw();
          *//*?}*/
 
+        /*? if >=1.21.6 {*/
+        float o = entity.getScale();
+        Vector3f vector3f = new Vector3f(0.0F, entity.getHeight() / 2.0F + scale * o, 0.0F);
+        float p = (float) size / o;
+
+        EntityRenderDispatcher entityRenderDispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
+        EntityRenderer<? super LivingEntity, ?> entityRenderer = entityRenderDispatcher.getRenderer(entity);
+        EntityRenderState entityRenderState = entityRenderer.getAndUpdateRenderState(entity, 1.0F);
+        entityRenderState.hitbox = null;
+        context.addEntity(entityRenderState, p, vector3f, entityRotation, pitchRotation, x1, y1, x2, y2);
+        /*?} else {*/
+        /*drawEntity(matrices, x, y, size, entityRotation, pitchRotation, entity);
+         *//*?}*/
+
+        entity.bodyYaw = oldBodyYaw;
+        entity.setYaw(oldYaw);
+        entity.setPitch(oldPitch);
+        /*? if >=1.21.5 {*/
+        entity.lastHeadYaw = oldPrevHeadYaw;
+        /*?} else {*/
+        /*entity.prevHeadYaw = oldPrevHeadYaw;
+         *//*?}*/
+        entity.headYaw = oldHeadYaw;
+    }
+
+    private static void drawEntity(MatrixStack matrices, int x, int y, int size, Quaternionf entityRotation, Quaternionf pitchRotation, LivingEntity entity) {
         /*? if >=1.20.5 {*/
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
         modelViewStack.pushMatrix();
@@ -58,11 +98,11 @@ public class DrawUtils {
         matrices.translate(0, -1, 0);
         matrices.multiply(entityRotation);
         matrices.translate(0, -1, 0);
-        /*? if >=1.21.5 {*/
-        DiffuseLighting.enableGuiShaderLighting();
-        /*?} else {*/
+        /*? if >=1.21.5 && <1.21.6 {*/
+        /*DiffuseLighting.enableGuiShaderLighting();
+        *//*?} else {*/
         /*DiffuseLighting.method_34742();
-        *//*?}*/
+         *//*?}*/
 
         EntityRenderDispatcher dispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
         if (pitchRotation != null) {
@@ -82,7 +122,9 @@ public class DrawUtils {
         dispatcher.setRenderShadows(true);
 
         matrices.pop();
-        DiffuseLighting.enableGuiDepthLighting();
+        /*? if <1.21.6 {*/
+        /*DiffuseLighting.enableGuiDepthLighting();
+        *//*?}*/
 
         /*? if >=1.20.5 {*/
         modelViewStack.popMatrix();
@@ -92,15 +134,5 @@ public class DrawUtils {
 
         //? if <=1.21.1
         /*RenderSystem.applyModelViewMatrix();*/
-
-        entity.bodyYaw = oldBodyYaw;
-        entity.setYaw(oldYaw);
-        entity.setPitch(oldPitch);
-        /*? if >=1.21.5 {*/
-        entity.lastHeadYaw = oldPrevHeadYaw;
-        /*?} else {*/
-        /*entity.prevHeadYaw = oldPrevHeadYaw;
-         *//*?}*/
-        entity.headYaw = oldHeadYaw;
     }
 }
