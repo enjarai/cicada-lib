@@ -29,7 +29,7 @@ public class DrawUtils {
         float yaw = (float) (Math.atan((-mouseX + x) / 40.0F) * Math.sin((rotation / 180.0 + 0.5) * Math.PI));
         float pitch = (float) Math.atan((-mouseY + y - size * 0.65f) / 40.0F);
 
-        Quaternionf entityRotation = new Quaternionf().rotateZ((float) Math.PI);
+        Quaternionf entityRotation = new Quaternionf().rotateZ((float) Math.PI).rotateY((float) Math.toRadians(rotation));
         Quaternionf pitchRotation = new Quaternionf().rotateX(pitch * 20.0F * 0.017453292F);
         entityRotation.mul(pitchRotation);
 
