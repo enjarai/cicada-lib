@@ -128,3 +128,41 @@ conversations:
       - extend:
           - mod: recursiveresources
             text: "I used the JSON to destroy the JSON."
+  transrights:
+    priority: 100
+    lines:
+      - mod: do_a_barrel_roll
+        text: "I support trans rights!"
+      - extend:
+          - mod: showmeyourskin
+            text: "Equal rights for queer people are not negotiable."
+      - extend:
+          - mod: headpats
+            text: "Mrraaow!! Trans rightss!"
+          - extend:
+              - mod: trickster
+                text: "Awww,, *pets the kitty*"
+              - mod: headpats
+                text: "Yayyy!!! :3"
+      - extend:
+          - mod: blahaj-totem
+            text: "Trans rights forever!"
+      - extend:
+          - mod: trickster
+            text: "I support trans wrongs!!"
+          - mod: do_a_barrel_roll
+            text: "What does that mean?"
+          - mod: trickster
+            text: "Well, you know what they say."
+          - mod: trickster
+            text: "Be gay, do crime :3"
+          - extend:
+              - mod: showmeyourskin
+                text: "Idk about crime, but I like the spirit!"
+  freeheadpat:
+    priority: 100
+    lines:
+      - mod: headpats
+        text: "If you're reading this you get a free coupon for one (1) headpat from this mod's author"
+      - mod: headpats
+        text: "Contact her on any platform to redeem :3"
