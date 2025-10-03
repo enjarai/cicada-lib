@@ -1,4 +1,3 @@
-/*? if >=1.21.2 {*/
 package nl.enjarai.cicada.api.render;
 
 import net.fabricmc.fabric.api.event.Event;
@@ -37,4 +36,3 @@ public class RenderStateUpdateEvent {
         void onStateUpdate(T entity, EntityRenderState state, float tickDelta);
     }
 }
-/*?}*/

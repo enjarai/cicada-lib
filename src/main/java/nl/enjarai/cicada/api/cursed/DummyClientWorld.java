@@ -18,7 +18,6 @@ public class DummyClientWorld extends ClientWorld {
     }
 
     private DummyClientWorld() {
-        //? if >1.21.1 {
         super(
                 DummyClientPlayNetworkHandler.getInstance(),
                 new Properties(Difficulty.EASY, false, true),
@@ -32,21 +31,6 @@ public class DummyClientWorld extends ClientWorld {
                 0L,
                 60
         );
-        //?} else {
-        /*super(
-                DummyClientPlayNetworkHandler.getInstance(),
-                new Properties(Difficulty.EASY, false, true),
-                RegistryKey.of(RegistryKeys.WORLD, Cicada.id("dummy")),
-                DummyClientPlayNetworkHandler.CURSED_DIMENSION_TYPE_REGISTRY.entryOf(
-                        RegistryKey.of(RegistryKeys.DIMENSION_TYPE, Cicada.id("dummy"))),
-                0,
-                0,
-                () -> MinecraftClient.getInstance().getProfiler(),
-                MinecraftClient.getInstance().worldRenderer,
-                false,
-                0L
-        );
-        *///?}
     }
 
     @Override

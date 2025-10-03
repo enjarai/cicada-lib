@@ -1,10 +1,8 @@
 package nl.enjarai.cicada.api.cursed;
 
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.entry.RegistryEntryOwner;
@@ -65,7 +63,6 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
         return defaultValue;
     }
 
-    /*? if >=1.20.5 {*/
     @Override
     public Optional<net.minecraft.registry.entry.RegistryEntryInfo> getEntryInfo(RegistryKey<T> key) {
         return Optional.empty();
@@ -75,24 +72,16 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
     public Optional<RegistryEntry.Reference<T>> getEntry(Identifier id) {
         return Optional.empty();
     }
-    /*?} else {*/
-    /*@Override
-    public Lifecycle getEntryLifecycle(T entry) {
-        return Lifecycle.experimental();
-    }
-    *//*?}*/
 
     @Override
     public Lifecycle getLifecycle() {
         return Lifecycle.experimental();
     }
 
-    /*? if >=1.21 {*/
     @Override
     public Optional<RegistryEntry.Reference<T>> getDefaultEntry() {
         return Optional.empty();
     }
-    /*?}*/
 
     @Override
     public Set<Identifier> getIds() {
@@ -149,85 +138,6 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
         return null;
     }
 
-    //? if <=1.21.1 {
-    
-    /*@Override
-    public Optional<RegistryEntry.Reference<T>> getEntry(RegistryKey<T> key) {
-        return Optional.of(RegistryEntry.Reference.standAlone(this, key));
-    }
-
-    @Override
-    public Optional<RegistryEntryList.Named<T>> getEntryList(TagKey<T> tag) {
-        return Optional.empty();
-    }
-
-    @Override
-    public RegistryEntryList.Named<T> getOrCreateEntryList(TagKey<T> tag) {
-        return RegistryEntryList.of(this, tag);
-    }
-
-    @Override
-    public Stream<Pair<TagKey<T>, RegistryEntryList.Named<T>>> streamTagsAndEntries() {
-        return Stream.empty();
-    }
-
-    @Override
-    public Stream<TagKey<T>> streamTags() {
-        return Stream.empty();
-    }
-
-    @Override
-    public void clearTags() {
-
-    }
-
-    @Override
-    public void populateTags(Map<TagKey<T>, List<RegistryEntry<T>>> tagEntries) {
-
-    }
-
-    @Override
-    public RegistryEntryOwner<T> getEntryOwner() {
-        return this;
-    }
-
-    @Override
-    public RegistryWrapper.Impl<T> getReadOnlyWrapper() {
-        return new RegistryWrapper.Impl<T>() {
-            @Override
-            public RegistryKey<? extends Registry<? extends T>> getRegistryKey() {
-                return CursedRegistry.this.registryKey;
-            }
-
-            @Override
-            public Lifecycle getLifecycle() {
-                return Lifecycle.experimental();
-            }
-
-            @Override
-            public Stream<RegistryEntry.Reference<T>> streamEntries() {
-                return Stream.empty();
-            }
-
-            @Override
-            public Stream<RegistryEntryList.Named<T>> streamTags() {
-                return Stream.empty();
-            }
-
-            @Override
-            public Optional<RegistryEntry.Reference<T>> getOptional(RegistryKey<T> key) {
-                return Optional.empty();
-            }
-
-            @Override
-            public Optional<RegistryEntryList.Named<T>> getOptional(TagKey<T> tag) {
-                return Optional.empty();
-            }
-        };
-    }
-
-    *///?} else {
-
     @Override
     public Stream<RegistryEntryList.Named<T>> getTags() {
         return Stream.empty();
@@ -252,8 +162,6 @@ public record CursedRegistry<T>(RegistryKey<? extends Registry<T>> registryKey, 
     public Optional<RegistryEntryList.Named<T>> getOptional(TagKey<T> tag) {
         return Optional.empty();
     }
-
-    //?}
 
     @NotNull
     @Override

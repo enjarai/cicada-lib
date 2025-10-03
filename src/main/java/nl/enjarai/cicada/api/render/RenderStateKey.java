@@ -1,4 +1,3 @@
-/*? if >=1.21.2 {*/
 package nl.enjarai.cicada.api.render;
 
 import net.minecraft.client.render.entity.state.EntityRenderState;
@@ -27,4 +26,3 @@ public class RenderStateKey<T> {
         ((KeyableRenderState) state).cicada$getStateMap().put(id, value);
     }
 }
-/*?}*/

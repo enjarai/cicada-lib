@@ -1,6 +1,5 @@
 package nl.enjarai.cicada.api.conversation.conditions;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import nl.enjarai.cicada.api.conversation.Conversation;

@@ -1,13 +1,11 @@
 package nl.enjarai.cicada.api.conversation.conditions;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import nl.enjarai.cicada.api.conversation.Conversation;
 import nl.enjarai.cicada.api.util.IntRange;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 public record DateCondition(IntRange year, IntRange month, IntRange weekDay,
                             IntRange day, IntRange hour, IntRange minute) implements LineCondition {

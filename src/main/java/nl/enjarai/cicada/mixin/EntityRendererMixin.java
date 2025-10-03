@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin {
-    /*? if >=1.21.2 {*/
     @Inject(
             method = "updateRenderState",
             at = @At("HEAD")
@@ -21,5 +20,4 @@ public class EntityRendererMixin {
     private void triggerEvent(Entity entity, EntityRenderState state, float tickDelta, CallbackInfo ci) {
         RenderStateUpdateEvent.allInvoker().onStateUpdate(entity, state, tickDelta);
     }
-    /*?}*/
 }

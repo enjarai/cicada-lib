@@ -1,21 +1,18 @@
 package nl.enjarai.cicada;
 
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.util.Identifier;
 import nl.enjarai.cicada.api.conversation.ConversationManager;
 import nl.enjarai.cicada.api.util.CicadaEntrypoint;
 import nl.enjarai.cicada.api.util.JsonSource;
 import nl.enjarai.cicada.api.util.ProperLogger;
 import nl.enjarai.cicada.api.util.YamlSource;
-import nl.enjarai.cicada.util.CapeHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CompletableFuture;
 
-public final class Cicada implements ModInitializer, ClientModInitializer, CicadaEntrypoint {
+public final class Cicada implements ModInitializer, CicadaEntrypoint {
 	public static final String MOD_ID = "cicada";
 	public static final Logger LOGGER = ProperLogger.getLogger(MOD_ID);
 	public static final Logger QUOTE_OF_THE_DAY_LOGGER = LoggerFactory.getLogger("Library Quote of the Day");
@@ -31,11 +28,6 @@ public final class Cicada implements ModInitializer, ClientModInitializer, Cicad
 			CONVERSATION_MANAGER.run();
 			ConversationManager.getThreadPool().shutdown();
 		}, ConversationManager.getThreadPool());
-	}
-
-	@Override
-	public void onInitializeClient() {
-		ClientLifecycleEvents.CLIENT_STOPPING.register(client -> CapeHandler.shutdown());
 	}
 
 	@Override
@@ -59,9 +51,6 @@ public final class Cicada implements ModInitializer, ClientModInitializer, Cicad
 	}
 
 	public static Identifier id(String path) {
-		//? if >=1.21 {
 		return Identifier.of(MOD_ID, path);
-		//?} else
-		/*return new Identifier(MOD_ID, path);*/
 	}
 }
