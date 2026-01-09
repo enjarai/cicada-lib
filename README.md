@@ -1,3 +1,10 @@
+> [!WARNING]
+> Like some of my other projects, this repository has been migrated to Codeberg.
+> Any new issues or pull requests here will be ignored, please create them over at the new repository.
+> 
+> New repository:
+> https://codeberg.org/enjarai/cicada-lib
+
 # CICADA
 
 > **TO GET RID OF THE UGLY CAPE, UPDATE TO VERSION 0.13.1**
